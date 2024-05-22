@@ -1,0 +1,6 @@
+Tower Git Client (free for students):
+    https://www.git-tower.com/students/mac
+
+- if you can't use Tower then GitHub Desktop is also nice. Choose one and stick with it.
+    https://desktop.github.com/
+
