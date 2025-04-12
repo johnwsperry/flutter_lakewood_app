@@ -1,11 +1,12 @@
 ﻿//<editor-fold desc="Map Vars">
 
 //<editor-fold desc="Map Details">
-double mapIconWidth = 60;
-double mapIconHeight = 60;
-double mapIconSize = 60;
+double mapIconWidth = 30;
+double mapIconHeight = 30;
+double mapIconSize = 30;
 
-double focusZoom = 25;
+double focusZoom = 19;
+int focusAnimationDuration = 500; //ms
 
 //focusmap
 double focusMapInitZoom = 20;
