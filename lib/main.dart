@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(HomePage());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,28 +49,27 @@ class MyApp extends StatelessWidget {
               ),
 
               Padding(
-                  padding: EdgeInsets.all(40),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                    ),
-                    onPressed: () {
-                      print('button pressed!');
-                    },
-                    child: Text(
-                      "Get started",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: "gothicExpanded",
+                padding: EdgeInsets.all(40),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  ),
+                  onPressed: () {
+                    print('button pressed!');
+                  },
+                  child: Text(
+                    "Get started",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "gothicExpanded",
 
-                        color: Colors.white,
-                        fontSize: 26,
-                      ),
-
+                      color: Colors.white,
+                      fontSize: 26,
                     ),
                   ),
                 ),
+              ),
             ],
           ),
         ),
@@ -90,6 +90,24 @@ class MyApp extends StatelessWidget {
             BottomNavigationBarItem(icon: Icon(Icons.map), label: "Button 3"),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TestPage extends StatelessWidget {
+  const TestPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(middle: Text("test text!")),
+      child: Center(
+        child: CupertinoButton(
+          onPressed: () {
+            
+          }, 
+          child: Text("button!")),
       ),
     );
   }
