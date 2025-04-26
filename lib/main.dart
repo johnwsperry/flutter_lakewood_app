@@ -192,7 +192,10 @@ class _HomePageState extends State<HomePage> {
           currentIndex: 0,
           onTap: _pageSwitch,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map), 
+              label: "Map"
+              ),
 
             BottomNavigationBarItem(
               icon: Icon(Icons.thumb_up),
