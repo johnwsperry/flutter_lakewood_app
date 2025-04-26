@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,19 +24,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Widget homePage;
+  late Widget mapPage;
   late List<Widget> widgetOptions;
 
-  int _currentIndex = 0;
+  List<String> likedHomes = <String>[];
+  // probably change the array type to widgets and store widgets here instead
+  // or 2d array to put info for houses or whatev
+
+  PreferredSizeWidget bar = AppBar(
+    backgroundColor: Colors.indigoAccent,
+    title: const Text("Lakewood Homes"),
+  );
+
+  int _currentIndex = -1;
 
   @override
   void initState() {
     super.initState();
 
+    for (int i = 1; i <= 20; i++) {
+      likedHomes.add("home $i");
+    }
+
+
     homePage = Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.indigoAccent,
-        title: const Text("Home Page"),
-      ),
+      appBar: bar,
 
       body: Container(
         decoration: BoxDecoration(
@@ -95,10 +108,70 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
+    Widget mapPage = Scaffold(
+      appBar: bar,
+      body: Center(
+        child: Text("This is the map page!"),
+      ),
+    );
+
+    Widget likedPage = Scaffold(
+      appBar: bar,
+      body: Column(
+        children: [
+          Text("This is the liked homes page!"),
+          Flexible(
+            child: ListView.separated(
+              shrinkWrap: true,
+              physics: AlwaysScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              padding: const EdgeInsets.all(20),
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  height: 100,
+                  color: Colors.lightBlueAccent,
+                  child: Center(
+                    child: Text('Liked ${likedHomes[index]}'),
+                  ),
+                );
+              }, 
+              separatorBuilder: (BuildContext context, int index) => const Divider(), 
+              itemCount: likedHomes.length,
+            ),
+          ),
+        ],
+      ),
+    );
+
+    Widget matchPage = Scaffold(
+      appBar: bar,
+      body: Center(
+        child: Text("This is the matchmaker page!"),
+      ),
+    );
+
+    Widget settingsPage = Scaffold(
+      appBar: bar,
+      body: Center(
+        child: Text("This is the settings page!"),
+      ),
+    );
+
+    // basic setup for a placeholder page
+
+    // Widget PAGENAME = Scaffold(
+    //   appBar: bar,
+    //   body: Center(
+    //     child: Text("This is the map page!"),
+    //   )
+    // );
+
     widgetOptions = <Widget>[
       homePage,
-      Text("PAGE 1 (get started button takes u here)"),
-      Text("PAGE 2"),
+      mapPage,
+      likedPage,
+      matchPage,
+      settingsPage,
     ];
   }
 
@@ -112,23 +185,29 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(child: widgetOptions.elementAt(_currentIndex)),
+        body: widgetOptions.elementAt(_currentIndex + 1),
 
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: 0,
           onTap: _pageSwitch,
           items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
+
+            BottomNavigationBarItem(
+              icon: Icon(Icons.thumb_up),
+              label: "Liked homes",
+            ),
+
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: "Home",
-              tooltip: "Testing button",
+              label: "Matchmaker",
             ),
 
             BottomNavigationBarItem(
-              icon: Icon(Icons.map),
-              label: "Map",
+              icon: Icon(Icons.settings),
+              label: "Settings",
             ),
-
-            BottomNavigationBarItem(icon: Icon(Icons.account_box), label: "Account"),
           ],
         ),
       ),
