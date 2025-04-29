@@ -1,12 +1,9 @@
-﻿import 'dart:developer';
-
-import 'package:flutter_lakewood_app/globleVars.dart';
+﻿
+import 'package:testing/globleVars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_lakewood_app/main.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:flutter_lakewood_app/Classes/mappointdata.dart';
 
 class Homepage extends StatefulWidget{
   const Homepage({super.key, required this.title});
