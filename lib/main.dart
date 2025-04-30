@@ -5,7 +5,7 @@ import 'Widgets/mapPage.dart';
 import 'Database/databases.dart';
 
 void main() {
-  //init();
+  init();
   runApp(MyApp());
 }
 

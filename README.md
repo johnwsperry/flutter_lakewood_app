@@ -1,16 +1,16 @@
-# flutter_lakewood_app
+# The Lakewood Historical App
 
-A new Flutter project.
+An app designed around showing the wonders of the Lakewood District in Lake Oswego, Oregon
 
-## Getting Started
+## Become amazed by a world you never knew about
 
-This project is a starting point for a Flutter application.
+The Lakewood Historical App will tell you all about the historical and wonderful houses in Lakewood.
 
-A few resources to get you started if this is your first Flutter project:
+You can browse through the different houses and learn about their history and see their wonderful architecture.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<p align="center">
+<img src="assets/randombg.jpeg" width="2000" height="1331" alt="*A wonderful image of Lakewood*">
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p align="center">
+<small>*An image of the wonderful Lakewood Area*</small>
+</p>
