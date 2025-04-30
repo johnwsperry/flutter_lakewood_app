@@ -84,22 +84,29 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin{
     double top;
     double right;
 
+    double widgetHeight = 0.5;
+    double widgetWidth = 0.25;
+
     //Check for tablet or phone.
     if(size.width >= size.height){
-      top = size.height * wideUp;
-      right = size.width * wideRight;
+      widgetHeight = 0.5;
+      widgetWidth = 0.5;
+      top = size.height * wideUp - size.height * widgetHeight / 2;
+      right = size.width * wideRight - size.width * widgetWidth / 2;
     } else{
-      top = size.height * longUp;
-      right = size.width * longRight;
+      widgetHeight = 0.5;
+      widgetWidth = 0.5;
+      top = size.height * longUp - size.height * widgetHeight / 2;
+      right = size.width * longRight - size.width * widgetWidth / 2;
     }
 
     entry = OverlayEntry(
       builder: (context) => Positioned(
-          height: size.height * 0.25, //TODO: DESIGNER
-          width: size.width * 0.25, //TODO: DESIGNER
+          height: size.height * widgetHeight, //TODO: DESIGNER
+          width: size.width * widgetWidth, //TODO: DESIGNER
           right: right,
           top: top,
-          child: selectionMenu()
+          child: aiMapOverlayMenu()
       ),
     );
 
@@ -113,6 +120,66 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin{
       entry.dispose();
     }
   }
+
+  //Ai test TODO
+  Widget aiMapOverlayMenu() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 2,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Placeholder Image
+          Container(
+            height: 100, // Adjust height as needed
+            width: 150, // Adjust width as needed
+            color: Colors.grey[300], // Light grey to represent the placeholder
+            child: const Center(
+              child: Text(
+                "Image Placeholder",
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 16), // Spacing between image and description
+
+          // Description Text
+          const Text(
+            "This is a simple map overlay for additional details. "
+                "The overlay contains an image placeholder, description, and actions for the user.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 16), // Spacing between description and buttons
+
+          // Close Button
+          ElevatedButton(
+            onPressed: closePin,
+            child: const Text("Close Overlay"),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
   //TODO: The menu for overlay widget. I pray for whoever has to design a good menu 💀💀💀
   Widget selectionMenu(){
