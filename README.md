@@ -9,7 +9,7 @@ The Lakewood Historical App will tell you all about the historical and wonderful
 You can browse through the different houses and learn about their history and see their wonderful architecture.
 
 <p align="center">
-<img src="assets/randombg.jpeg" width="2000" height="1331" alt="*A wonderful image of Lakewood*">
+<img src="assets/randombg.jpeg" alt="*A wonderful image of Lakewood*">
 
 <p align="center">
 <small>*An image of the wonderful Lakewood Area*</small>
