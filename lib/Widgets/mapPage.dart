@@ -5,16 +5,16 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:latlong2/latlong.dart';
 
-class Homepage extends StatefulWidget{
-  const Homepage({super.key, required this.title});
+class MapPage extends StatefulWidget{
+  const MapPage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<Homepage> createState() => HomepageState();
+  State<MapPage> createState() => MapPageState();
 }
 
-class HomepageState extends State<Homepage> with TickerProviderStateMixin{
+class MapPageState extends State<MapPage> with TickerProviderStateMixin{
 
   late final _animatedMapController = AnimatedMapController(
     vsync: this,
