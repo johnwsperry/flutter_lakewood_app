@@ -10,7 +10,10 @@ You can browse through the different houses and learn about their history and se
 
 <p align="center">
 <img src="assets/randombg.jpeg" alt="*A wonderful image of Lakewood*">
-
 <p align="center">
 <small>*An image of the wonderful Lakewood Area*</small>
+<p align="center">
+<img src="assets/testpic.png" alt="*Another wonderful image of Lakewood*">
+<p align="center">
+<small>*Another wonderful image of Lakewood*</small>
 </p>
