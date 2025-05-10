@@ -26,7 +26,8 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin{
   LatLng? selectedPin;
   OverlayEntry? entry;
 
-  bool gettingCords = true;
+  bool gettingCords = false;
+
 
   //Use this for updating center cus cleaner
   void updateCenter(LatLng center, double zoom){
@@ -164,11 +165,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin{
       return testMap(context);
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-            'House Dating Sim UwU' //TODO: Name Here! Change for production.
-        ),
-      ),
+      appBar: bar,
       body: map(context),
     );
   }
