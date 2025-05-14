@@ -1,5 +1,8 @@
-﻿import 'package:flutter/cupertino.dart';
+﻿
 import 'package:flutter/material.dart';
+import 'mapPage.dart';
+import 'likedPage.dart';
+import 'package:testing/globleVars.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,25 +16,11 @@ class _HomePageState extends State<HomePage> {
   late Widget mapPage;
   late List<Widget> widgetOptions;
 
-  List<String> likedHomes = <String>[];
-  // probably change the array type to widgets and store widgets here instead
-  // or 2d array to put info for houses or whatev
-
-  PreferredSizeWidget bar = AppBar(
-    backgroundColor: Colors.indigoAccent,
-    title: const Text("Lakewood Homes"),
-  );
-
   int _currentIndex = -1;
 
   @override
   void initState() {
     super.initState();
-
-    for (int i = 1; i <= 20; i++) {
-      likedHomes.add("home $i");
-    }
-
 
     homePage = Scaffold(
       appBar: bar,
@@ -75,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 ),
                 onPressed: () {
-                  _pageSwitch(1);
+                  _pageSwitch(0);
                 },
                 child: Text(
                   "Get started",
@@ -94,40 +83,9 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    Widget mapPage = Scaffold(
-      appBar: bar,
-      body: Center(
-        child: Text("This is the map page!"),
-      ),
-    );
+    Widget mapPage = MapPage(title: "Testing");
 
-    Widget likedPage = Scaffold(
-      appBar: bar,
-      body: Column(
-        children: [
-          Text("This is the liked homes page!"),
-          Flexible(
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: AlwaysScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              padding: const EdgeInsets.all(20),
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  height: 100,
-                  color: Colors.lightBlueAccent,
-                  child: Center(
-                    child: Text('Liked ${likedHomes[index]}'),
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) => const Divider(),
-              itemCount: likedHomes.length,
-            ),
-          ),
-        ],
-      ),
-    );
+    Widget likedPage = LikedPage();
 
     Widget matchPage = Scaffold(
       appBar: bar,
@@ -175,7 +133,6 @@ class _HomePageState extends State<HomePage> {
 
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          currentIndex: 0,
           onTap: _pageSwitch,
           items: const [
             BottomNavigationBarItem(

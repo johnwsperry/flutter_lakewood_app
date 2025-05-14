@@ -69,6 +69,11 @@ flutter:
   assets:
     - assets/testpic.png
     - assets/randombg.jpeg
+    - assets/houseplaceholder1.png
+    - assets/houseplaceholder2.png
+    - assets/houseplaceholder3.png
+
+  # MOVE AWAY FROM ASSETIMAGES AFTER WE HAVE THE DATABASE DOWN
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
