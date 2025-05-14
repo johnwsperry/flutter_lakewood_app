@@ -20,7 +20,7 @@ int longCenterOffset = -300;
 
 //Widget Centering
 double wideUp = 0.5;
-double wideRight = 0.4;
+double wideRight = 0.6;
 
 double longUp = 0.6;
 double longRight = 0.5;
