@@ -40,8 +40,6 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin{
   //The event that is called when the overlay is opened.
   void onPinClickEvent(LatLng center){
 
-    //Testing event TODO
-    print(databases.localDb.toString());
     //Move and update pin.
     if(selectedPin == null) {
       bool isWide = false;
