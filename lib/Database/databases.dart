@@ -1,35 +1,21 @@
 ﻿
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:testing/globleVars.dart' as global_vars;
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
-var localDb;
-
-void init() async {
-  print("Running...");
-  //check if ran before
-  if(localDb != null) return;
-  //initialize sqlite
-  sqfliteFfiInit();
-  //set database factory based on the application type
-  if(kIsWeb){
-    databaseFactory = databaseFactoryFfiWeb;
-  } else {
-    databaseFactory = databaseFactoryFfi;
-  }
+import 'package:flutter/widgets.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 
 
-  localDb = await openDatabase('localDatabase.sqllite');
-
-  //test
-  print(localDb.toString());
-  print("comp");
-
-  List<Map<String, dynamic>> results = await localDb.query('settings');
-
-  for (var row in results) {
-    print(row['column_name']);
-  }
-
+void main() async {
+  //Insure this is init
+  WidgetsFlutterBinding.ensureInitialized();
+  // Get the database
+  final database = openDatabase(
+    //Create the path by joining databases path and the normal path.
+    join(await getDatabasesPath(), global_vars.settingName),
+  );
 }
+
