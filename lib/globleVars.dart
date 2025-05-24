@@ -1,4 +1,6 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+
 
 //<editor-fold desc="Map Vars">
 
@@ -32,26 +34,6 @@ final PreferredSizeWidget bar = AppBar(
     backgroundColor: Colors.indigoAccent,
     title: const Text("Lakewood Homes", style: TextStyle(color: Colors.white),),
   );
-
-//Data for liked houses & houses in general
-class House {
-
-  // eventually replace image with a List<AssetImage> of images if we get more
-
-  final String name;
-  final String address;
-  final String description;
-  final AssetImage image;
-
-  const House({
-    required this.name,
-    required this.address,
-    required this.description,
-    required this.image,
-  });
-}
-
-List<House> likedHomes = [];
 
 //</editor-fold>
 //<editor-fold desc="Map API Information">

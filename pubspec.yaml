@@ -42,6 +42,7 @@ dependencies:
   flutter_map_cancellable_tile_provider: ^3.1.0
   sqflite_common_ffi: ^2.3.5
   sqflite_common_ffi_web: ^1.0.0
+  geocoding: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -67,11 +68,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/testpic.png
-    - assets/randombg.jpeg
-    - assets/houseplaceholder1.png
-    - assets/houseplaceholder2.png
-    - assets/houseplaceholder3.png
+    - resources/assets/testpic.png
+    - resources/assets/randombg.jpeg
+    - resources/assets/houseplaceholder1.png
+    - resources/assets/houseplaceholder2.png
+    - resources/assets/houseplaceholder3.png
 
   # MOVE AWAY FROM ASSETIMAGES AFTER WE HAVE THE DATABASE DOWN
 
@@ -89,10 +90,10 @@ flutter:
   fonts:
     - family: gothicExpanded
       fonts:
-        - asset: fonts/SpecialGothicExpandedOne-Regular.ttf
+        - asset: resources/fonts/SpecialGothicExpandedOne-Regular.ttf
     - family: robotoSlab
       fonts:
-        - asset: fonts/RobotoSlab-VariableFont_wght.ttf
+        - asset: resources/fonts/RobotoSlab-VariableFont_wght.ttf
   #        style: italic
   #   - family: Trajan Pro
   #     fonts:
