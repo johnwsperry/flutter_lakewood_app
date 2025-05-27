@@ -47,6 +47,6 @@ String userPackageName = "com.lakeridge.app"; //May need changing
 
 //Databases are stored in the database path, which can be acquired by getDatabasesPath();
 String settingName = "settings.db";
-String housesName = "houses.db";
+String homesName = "homes.db";
 //</editor-fold>
 //</editor-fold>
