@@ -43,6 +43,7 @@ dependencies:
   sqflite_common_ffi: ^2.3.5
   sqflite_common_ffi_web: ^1.0.0
   geocoding: ^2.1.1
+  crypto: ^3.0.6
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,7 @@ flutter:
     - resources/assets/houseplaceholder1.png
     - resources/assets/houseplaceholder2.png
     - resources/assets/houseplaceholder3.png
+    - resources/assets/houses/
 
   # MOVE AWAY FROM ASSETIMAGES AFTER WE HAVE THE DATABASE DOWN
 
