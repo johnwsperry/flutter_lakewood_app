@@ -1,5 +1,6 @@
 ﻿
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
+import 'package:testing/Classes/house.dart';
 import 'package:testing/globleVars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -134,13 +135,13 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin{
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(),
             spreadRadius: 2,
             blurRadius: 5,
           ),
         ],
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(15),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -243,25 +244,16 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin{
 
   MarkerLayer getLayer(BuildContext context){
     List<Marker> markers = [];
-    List<LatLng> locations = [];
-    
-    //<Temp>
-    locations.add(const LatLng(45.413338, -122.667718));
-    locations.add(const LatLng(45.412787, -122.669757));
-    locations.add(const LatLng(45.412907, -122.670082));
-    locations.add(const LatLng(45.413012, -122.670346));
-    locations.add(const LatLng(45.413099, -122.670572));
-    //</Temp>
 
-    for (var location in locations) {
+    for (House house in allHouses) {
       markers.add(Marker(
-          point: location,
+          point: house.location,
           width: mapIconWidth,
           height: mapIconHeight,
           alignment: Alignment.topCenter,
           child:GestureDetector(
               onTap: () {
-                onPinClickEvent(location);
+                onPinClickEvent(house.location);
               },
               child: Icon(
                   Icons.location_pin,

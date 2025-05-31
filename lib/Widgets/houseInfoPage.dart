@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing/globleVars.dart';
+import 'package:testing/Classes/house.dart';
 
 class HouseInfoPage extends StatelessWidget {
   final int houseIndex;

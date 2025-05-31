@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:testing/globleVars.dart';
+import 'package:testing/Classes/house.dart';
 import 'housePage.dart';
 
 class LikedPage extends StatefulWidget {
@@ -16,8 +17,9 @@ class _LikedPageState extends State<LikedPage> {
   void initState() {
     super.initState();
 
-    // TODO: replace after getting database
-    //       make this only activate once, on launch of app
+    // This is for debug-- fills likedHomes with 20 placeholder homes.
+
+    /*
     if (likedHomes.isEmpty) {
     for (int i = 1; i <= 20; i++) {
       likedHomes.add(
@@ -25,13 +27,16 @@ class _LikedPageState extends State<LikedPage> {
           name: "Home $i",
           address: "${i + 122} Street Rd",
           description: "this is a description of what the house is like",
-          image: AssetImage("assets/houseplaceholder${i % 3 + 1}.png"),
+          image: AssetImage("resources/assets/houseplaceholder${i % 3 + 1}.png"),
         ),
       );
-    }
-  }}
+    }}
+    */
 
-  void _toggleLike(int index) {
+  }
+
+  void _removeLike(int index) {
+    if (likedHomes.isEmpty) return;
     setState(() {
       // maybe put an animation here?
       likedHomes.removeAt(index);
@@ -50,7 +55,9 @@ class _LikedPageState extends State<LikedPage> {
             Spacer(flex: 1),
             Flexible(
               flex: 20,
-              child: ListView.separated(
+              child: likedHomes.isEmpty ? Center(
+                child: Text("You don't have any liked homes yet! Like some homes on the map to get started!"),
+              ) : ListView.separated(
                 shrinkWrap: true,
                 physics: AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
@@ -131,7 +138,7 @@ class _LikedPageState extends State<LikedPage> {
                                           heroTag: null,  // can give this an unique tag for hero animations
                                           child: Icon(Icons.star),
                                           onPressed: () {
-                                            _toggleLike(index);
+                                            _removeLike(index);
                                           },
                                         ),
                                       ),
