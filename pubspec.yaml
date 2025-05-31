@@ -74,7 +74,7 @@ flutter:
     - resources/assets/houseplaceholder1.png
     - resources/assets/houseplaceholder2.png
     - resources/assets/houseplaceholder3.png
-    - resources/database/
+    - resources/assets/houses/
 
   # MOVE AWAY FROM ASSETIMAGES AFTER WE HAVE THE DATABASE DOWN
 

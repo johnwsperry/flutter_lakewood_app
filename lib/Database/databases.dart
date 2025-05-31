@@ -38,8 +38,6 @@ class DatabaseHelper {
 
     var path = join(await getDatabasesPath(), global_vars.homesName);
 
-    print(path);
-
     return await openDatabase(
       path,
       onCreate: (db, version) {

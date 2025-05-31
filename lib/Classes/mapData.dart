@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:path/path.dart';
 
 class MapData{
 
@@ -22,7 +23,7 @@ class MapData{
 
   MapData(this.id, this.name, this.address, this.description, double locationLo, double locationLa, this.path){
     location = LatLng(locationLa, locationLo);
-    image = AssetImage(path);
+    image = AssetImage(join("assets","houses",path));
   }
 
 
