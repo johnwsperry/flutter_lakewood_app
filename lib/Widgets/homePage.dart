@@ -1,26 +1,55 @@
 ﻿
 import 'package:flutter/material.dart';
+import 'package:testing/Widgets/settingsPage.dart';
 import 'mapPage.dart';
 import 'likedPage.dart';
 import 'package:testing/globleVars.dart';
+import 'package:testing/Classes/house.dart';
+import 'package:latlong2/latlong.dart'; 
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   late Widget homePage;
   late Widget mapPage;
   late List<Widget> widgetOptions;
 
   int _currentIndex = -1;
 
+  Future<void> loadHomes() async { 
+      List<LatLng> locations = []; 
+    
+      //TODO: replace this with actually fetching the items from the database lol
+
+      locations.add(const LatLng(45.413338, -122.667718));
+      locations.add(const LatLng(45.412787, -122.669757));
+      locations.add(const LatLng(45.412907, -122.670082));
+      locations.add(const LatLng(45.413012, -122.670346));
+      locations.add(const LatLng(45.413099, -122.670572));
+
+      for (LatLng location in locations) {
+        allHomes.add(
+          House(
+            name: "Home",
+            address: await getAddress(location.latitude, location.longitude),
+            description: "this is a description of what the house is like",
+            image: AssetImage("resources/assets/houseplaceholder1.png"),
+            location: location,
+          ),
+        );
+      }
+    }
+
   @override
   void initState() {
     super.initState();
+
+    loadHomes();
 
     homePage = Scaffold(
       appBar: bar,
@@ -28,7 +57,7 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/randombg.jpeg'),
+            image: AssetImage('resources/assets/randombg.jpeg'),
             fit: BoxFit.fitHeight,
           ),
         ),
@@ -64,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 ),
                 onPressed: () {
-                  _pageSwitch(0);
+                  pageSwitch(0);
                 },
                 child: Text(
                   "Get started",
@@ -94,12 +123,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    Widget settingsPage = Scaffold(
-      appBar: bar,
-      body: Center(
-        child: Text("This is the settings page!"),
-      ),
-    );
+    Widget settingsPage = SettingsPage();
 
     // basic setup for a placeholder page
 
@@ -119,7 +143,7 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  void _pageSwitch(int index) {
+  void pageSwitch(int index) {
     setState(() {
       _currentIndex = index;
     });
@@ -133,7 +157,7 @@ class _HomePageState extends State<HomePage> {
 
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          onTap: _pageSwitch,
+          onTap: pageSwitch,
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.map),
