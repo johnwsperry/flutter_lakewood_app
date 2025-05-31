@@ -1,9 +1,12 @@
 ﻿
+import 'dart:convert';
 import 'dart:io';
-import 'dart:nativewrappers/_internal/vm/lib/typed_data_patch.dart';
-
+import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
+import 'package:testing/Classes/mapData.dart';
 import 'package:testing/globleVars.dart' as global_vars;
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -11,17 +14,62 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import '../Classes/mappointdata.dart';
 
 
-void main() async {
-  //Insure this is init
-  WidgetsFlutterBinding.ensureInitialized();
-  // Get the database
-  final houseDb = openDatabase(
-    //Create the path by joining databases path and the normal path.
-    join(await getDatabasesPath(), global_vars.homesName),
-  );
+class DatabaseHelper {
+  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+  static Database? _database;
 
+  DatabaseHelper._privateConstructor();
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  Future<Database> _initDatabase() async {
+    if (kIsWeb) {
+      databaseFactory = databaseFactoryFfiWeb;
+    } else {
+      databaseFactory = databaseFactoryFfi;
+    }
+
+    var path = join(await getDatabasesPath(), global_vars.homesName);
+
+    print(path);
+
+    return await openDatabase(
+      path,
+      onCreate: (db, version) {
+        return db.execute(
+          "CREATE TABLE MapData(id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT NOT NULL, description TEXT NOT NULL, locationLo REAL NOT NULL, locationLa REAL NOT NULL, imagePath TEXT NOT NULL)",
+        );
+      },
+      version: global_vars.homeDatabaseVersion,
+    );
+  }
+}
+
+
+Future<List<MapData>> houses() async {
+  // Get a reference to the database.
+  print("hi");
+
+  var db = await DatabaseHelper.instance.database;
+
+  //query the houses
+  final List<Map<String, Object?>> houses = await db.query('MapData');
+
+  print(houses);
+
+  // Convert to list
+  return [
+    for (final {'id': id as int, 'name': name as String, 'address': address as String, 'description': description as String, 'locationLo': locationLo as double, 'locationLa': locationLa as double, 'imagePath': imagePath as String}
+    in houses)
+      MapData(id, name, address, description, locationLo, locationLa, imagePath),
+  ];
 }
 
 void cloneHouses() async {
@@ -34,8 +82,17 @@ void cloneHouses() async {
   var data = await rootBundle.load(join('resources','database', global_vars.homesName));
   List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
+
   //Save File
   await File(databasePath).writeAsBytes(bytes);
+
+}
+
+Digest sha256Encrypt(List<int> bytes){
+  return sha256.convert(bytes);
+}
+
+void test(){
 
 }
 

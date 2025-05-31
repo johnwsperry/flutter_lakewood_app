@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'Widgets/homePage.dart';
 import 'Database/databases.dart';
+import 'test.dart';
 import 'package:testing/Classes/house.dart';
 import 'package:latlong2/latlong.dart'; 
 import 'package:geocoding/geocoding.dart';
@@ -10,8 +15,11 @@ bool debugMode = true; // TURN THIS OFF WHEN WE PUBLISH THE APP
 
 void main() {
 
-  List<LatLng> locations = []; 
 
+
+  houses();
+
+  List<LatLng> locations = [];
 
   // Remove these locations once we get database w/ locations  
   locations.add(const LatLng(45.413338, -122.667718));
@@ -19,6 +27,7 @@ void main() {
   locations.add(const LatLng(45.412907, -122.670082));
   locations.add(const LatLng(45.413012, -122.670346));
   locations.add(const LatLng(45.413099, -122.670572));
+
 
   for (LatLng location in locations) {
     allHouses.add(
