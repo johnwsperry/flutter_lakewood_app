@@ -36,7 +36,12 @@ class DatabaseHelper {
       databaseFactory = databaseFactoryFfi;
     }
 
+    cloneHouses();
+
     var path = join(await getDatabasesPath(), global_vars.homesName);
+    var path2 = join("resources", "database", "data.db");
+    print(path2);
+    print(FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound);
 
     return await openDatabase(
       path,
@@ -73,13 +78,19 @@ Future<List<MapData>> houses() async {
 void cloneHouses() async {
   String databasePath = join(await getDatabasesPath(), global_vars.homesName);
 
-  //Check if exist
-  if(FileSystemEntity.typeSync(databasePath) != FileSystemEntityType.notFound) return;
-
-  //clone the database into resources
-  var data = await rootBundle.load(join('resources','database', global_vars.homesName));
+  var data = await rootBundle.load("resources/databases/homes.sqlite");
   List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
+  //Check if exist
+  if(FileSystemEntity.typeSync(databasePath) != FileSystemEntityType.notFound){
+    var oldData = File(databasePath);
+    var sha256old = sha256Encrypt(await getBytesFromFile(oldData));
+    var sha256new = sha256Encrypt(bytes);
+    if(sha256new == sha256old) return;
+  }
+
+  print(sha256Encrypt(bytes));
+  print("Replacing");
 
   //Save File
   await File(databasePath).writeAsBytes(bytes);
@@ -88,6 +99,13 @@ void cloneHouses() async {
 
 Digest sha256Encrypt(List<int> bytes){
   return sha256.convert(bytes);
+}
+
+Future<List<int>> getBytesFromFile(File file) async{
+  var bytes = await file.readAsBytes();
+  var byteData = ByteData.view(bytes.buffer);
+  Uint8List byteDataBytes = byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes);
+  return byteDataBytes;
 }
 
 void test(){
