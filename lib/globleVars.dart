@@ -1,5 +1,5 @@
 ﻿import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
+
 
 
 //<editor-fold desc="Map Vars">
@@ -30,11 +30,13 @@ double longUp = 0.6;
 double longRight = 0.5;
 
 //Temporary appbar for most pages
-final PreferredSizeWidget bar = AppBar(
-    backgroundColor: Colors.indigoAccent,
-    title: const Text("Lakewood Homes", style: TextStyle(color: Colors.white),),
-  );
 
+AppBar getBar({String title = "Lakewood Homes"}) {
+  return AppBar(
+    backgroundColor: Colors.indigoAccent,
+    title: Text(title, style: TextStyle(color: Colors.white),),
+  );
+}
 //</editor-fold>
 //<editor-fold desc="Map API Information">
 String mapApiUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png"; //Change based on url here if default url not good enough https://wiki.openstreetmap.org/wiki/Raster_tile_providers

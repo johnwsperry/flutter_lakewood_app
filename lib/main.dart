@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testing/Theme/themes.dart';
 import 'Widgets/homePage.dart';
 import 'Database/databases.dart' as database;
-
 
 bool debugMode = true; // TURN THIS OFF WHEN WE PUBLISH THE APP
 
@@ -16,6 +16,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    return MaterialApp(
+      home: HomePage(),
+      theme: lightMode,
+      darkTheme: darkMode,
+    );
   }
 }
