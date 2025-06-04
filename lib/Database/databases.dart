@@ -33,7 +33,7 @@ class DatabaseHelper {
       databaseFactory = databaseFactoryFfi;
     }
 
-    //cloneHouses();
+    cloneHouses();
 
     var path = join(await getDatabasesPath(), global_vars.homesName);
 
