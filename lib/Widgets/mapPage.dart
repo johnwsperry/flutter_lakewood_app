@@ -53,13 +53,11 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
           center.latitude,
           center.longitude + wideCenterOffset * latLongMultiplier,
         );
-        print(center);
       } else {
         newCenter = LatLng(
           center.latitude + longCenterOffset * latLongMultiplier,
           center.longitude,
         );
-        print(center);
       }
 
       updateCenter(newCenter, focusZoom);

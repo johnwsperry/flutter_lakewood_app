@@ -11,10 +11,7 @@ import 'package:testing/globleVars.dart' as global_vars;
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-import '../Classes/mappointdata.dart';
 
 
 class DatabaseHelper {
@@ -36,18 +33,15 @@ class DatabaseHelper {
       databaseFactory = databaseFactoryFfi;
     }
 
-    cloneHouses();
+    //cloneHouses();
 
     var path = join(await getDatabasesPath(), global_vars.homesName);
-    var path2 = join("resources", "database", "data.db");
-    print(path2);
-    print(FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound);
 
     return await openDatabase(
       path,
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE MapData(id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT NOT NULL, description TEXT NOT NULL, locationLo REAL NOT NULL, locationLa REAL NOT NULL, imagePath TEXT NOT NULL)",
+          "CREATE TABLE MapData(id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT NOT NULL, description TEXT NOT NULL, locationLa REAL NOT NULL, locationLo REAL NOT NULL, imageCount INT NOT NULL, tags TEXT NOT NULL)",
         );
       },
       version: global_vars.homeDatabaseVersion,
@@ -58,20 +52,18 @@ class DatabaseHelper {
 
 Future<List<MapData>> houses() async {
   // Get a reference to the database.
-  print("hi");
 
   var db = await DatabaseHelper.instance.database;
 
   //query the houses
   final List<Map<String, Object?>> houses = await db.query('MapData');
 
-  print(houses);
 
   // Convert to list
   return [
-    for (final {'id': id as int, 'name': name as String, 'address': address as String, 'description': description as String, 'locationLo': locationLo as double, 'locationLa': locationLa as double, 'imagePath': imagePath as String}
+    for (final {'id': id as int, 'name': name as String, 'address': address as String, 'description': description as String, 'locationLa': locationLa as double, 'locationLo': locationLo as double, 'imageCount': imageCount as int, 'tags' : tags as String}
     in houses)
-      MapData(id, name, address, description, locationLo, locationLa, imagePath),
+      MapData(id, name, address, description, locationLa, locationLo, imageCount, tags),
   ];
 }
 
@@ -89,8 +81,6 @@ void cloneHouses() async {
     if(sha256new == sha256old) return;
   }
 
-  print(sha256Encrypt(bytes));
-  print("Replacing");
 
   //Save File
   await File(databasePath).writeAsBytes(bytes);
