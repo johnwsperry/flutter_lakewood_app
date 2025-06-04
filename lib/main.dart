@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'Widgets/homePage.dart';
-import 'Database/databases.dart' as database;
+import 'Util/databases.dart' as database;
 
 
 bool debugMode = true; // TURN THIS OFF WHEN WE PUBLISH THE APP
 
 void main() {
-  database.DatabaseSingleton.instance.houses;
+  database.DatabaseSingleton.queryHousesById(0);
   runApp(MyApp());
 }
 

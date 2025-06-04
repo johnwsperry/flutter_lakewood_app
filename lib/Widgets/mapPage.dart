@@ -6,7 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:latlong2/latlong.dart';
 import 'housePage.dart';
-import '../Database/databases.dart' as databases;
+import '../Util/databases.dart' as databases;
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});

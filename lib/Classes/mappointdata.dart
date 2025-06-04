@@ -1,5 +1,6 @@
 ﻿import 'package:latlong2/latlong.dart';
 
+@Deprecated("Use MapData")
 class MapPointData {
   //Stores data about a location
   LatLng location;

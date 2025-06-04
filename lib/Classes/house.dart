@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
 
+@Deprecated("Use mapData! Will be removed soon!")
 class House {
 
   // eventually replace image with a List<AssetImage> of images if we get more
