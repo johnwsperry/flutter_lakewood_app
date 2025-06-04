@@ -7,7 +7,7 @@ import 'Database/databases.dart' as database;
 bool debugMode = true; // TURN THIS OFF WHEN WE PUBLISH THE APP
 
 void main() {
-  database.houses();
+  database.DatabaseSingleton.instance.houses;
   runApp(MyApp());
 }
 

@@ -14,11 +14,12 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path/path.dart';
 
 
-class DatabaseHelper {
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+class DatabaseSingleton {
+  static final DatabaseSingleton instance = DatabaseSingleton._privateConstructor();
   static Database? _database;
+  static List<MapData>? _data;
 
-  DatabaseHelper._privateConstructor();
+  DatabaseSingleton._privateConstructor();
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -47,25 +48,32 @@ class DatabaseHelper {
       version: global_vars.homeDatabaseVersion,
     );
   }
+
+  Future<List<MapData>> get houses async {
+    //Check if cached
+    if(_data != null) return _data!;
+    //Cache it if otherwise
+    // Get a reference to the database.
+
+    var db = await DatabaseSingleton.instance.database;
+
+    //query the houses
+    final List<Map<String, Object?>> houses = await db.query('MapData');
+
+
+    // Convert to list
+   _data = [
+     for (final {'id': id as int, 'name': name as String, 'address': address as String, 'description': description as String, 'locationLa': locationLa as double, 'locationLo': locationLo as double, 'imageCount': imageCount as int, 'tags' : tags as String}
+     in houses)
+       MapData(id, name, address, description, locationLa, locationLo, imageCount, tags),
+   ];
+   return _data!;
+  }
 }
 
 
-Future<List<MapData>> houses() async {
-  // Get a reference to the database.
-
-  var db = await DatabaseHelper.instance.database;
-
-  //query the houses
-  final List<Map<String, Object?>> houses = await db.query('MapData');
 
 
-  // Convert to list
-  return [
-    for (final {'id': id as int, 'name': name as String, 'address': address as String, 'description': description as String, 'locationLa': locationLa as double, 'locationLo': locationLo as double, 'imageCount': imageCount as int, 'tags' : tags as String}
-    in houses)
-      MapData(id, name, address, description, locationLa, locationLo, imageCount, tags),
-  ];
-}
 
 void cloneHouses() async {
   String databasePath = join(await getDatabasesPath(), global_vars.homesName);

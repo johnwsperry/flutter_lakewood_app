@@ -10,7 +10,7 @@ class HouseOfTheDay{
   late int houseToday;
 
   void displayHouses() async{
-    List<MapData> data = await database.houses();
+    List<MapData> data = await database.DatabaseSingleton.instance.houses;
     if(houseToday == null){
       houseToday = Random(DateTime.timestamp().day).nextInt(data.length);
     }
