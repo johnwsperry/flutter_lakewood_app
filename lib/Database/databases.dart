@@ -70,7 +70,7 @@ Future<List<MapData>> houses() async {
 void cloneHouses() async {
   String databasePath = join(await getDatabasesPath(), global_vars.homesName);
 
-  var data = await rootBundle.load("resources/databases/homes.sqlite");
+  var data = await rootBundle.load("resources/databases/${global_vars.homesName}");
   List<int> bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
   //Check if exist
