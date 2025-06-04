@@ -18,7 +18,7 @@ class HousePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final House house = (isLiked) ? likedHomes[houseIndex] : allHomes[houseIndex];
     return Scaffold(
-      appBar: bar,
+      appBar: getBar(title: house.getCleanAddress()),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(16),
@@ -57,6 +57,17 @@ class HousePage extends StatelessWidget {
                           fontStyle: FontStyle.italic,
                           fontFamily: "robotoSlab",
                           fontSize: 24,
+                        ),
+                      ),
+                    ),
+                     SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        "${house.type}, built in ${house.yearBuilt}",
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontFamily: "robotoSlab",
+                          fontSize: 18,
                         ),
                       ),
                     ),

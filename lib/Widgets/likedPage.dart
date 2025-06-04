@@ -34,8 +34,15 @@ class _LikedPageState extends State<LikedPage> {
 
   void _removeLike(int index) {
     if (likedHomes.isEmpty) return;
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.removeCurrentSnackBar();
     setState(() {
-      // maybe put an animation here?
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text('Removed ${likedHomes[index].getCleanAddress()} from liked homes!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
       likedHomes.removeAt(index);
     });
   }
@@ -44,7 +51,7 @@ class _LikedPageState extends State<LikedPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: bar,
+        appBar: getBar(),
         body: Column(
           children: [
             Spacer(flex: 1),
