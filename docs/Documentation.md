@@ -7,5 +7,6 @@ These files should be constantly mirrored to the [wiki](https://github.com/johnw
 
 ### [How to create documentation](Tutorials/HowToDoc.md)
 ### [How to use the database](Database/Database%20Overview.md)
+### [How to use the bodytext class](Util/BodyText.md)
 
 # [Go back to the top!](#Documentation)
