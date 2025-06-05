@@ -45,6 +45,8 @@ dependencies:
   geolocator: ^14.0.1
   geocoding: '^2.1.1'
   provider: '^6.0.0'
+  path: ^1.9.1
+  crypto: ^3.0.6
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +75,8 @@ flutter:
     - resources/assets/
     - resources/assets/houses/
     - resources/databases/
+    - resources/databases/homeData/
+    - resources/databases/userData/
 
     # MOVE AWAY FROM ASSETIMAGES AFTER WE HAVE THE DATABASE DOWN
     #No
