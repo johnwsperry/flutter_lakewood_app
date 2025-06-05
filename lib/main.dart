@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'Widgets/homePage.dart';
+
 import 'Util/databases.dart' as database;
+import 'Widgets/homePage.dart';
 
 
 bool debugMode = true; // TURN THIS OFF WHEN WE PUBLISH THE APP
 
 void main() {
-  database.DatabaseSingleton.queryHousesById(0);
+  database.Databases.queryHousesByPath("lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite");
   runApp(MyApp());
 }
 

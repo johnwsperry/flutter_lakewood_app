@@ -1,13 +1,10 @@
 ﻿
 
-import 'dart:ui';
-import 'package:flutter/material.dart';
-import '../Enums/sortTag.dart';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:path/path.dart';
+
+import '../Enums/sortTag.dart';
 
 class MapData{
 
@@ -65,7 +62,7 @@ class MapData{
       if(number < 0 || number >= SortTag.values.length) return returnTags;
       returnTags.add(SortTag.values[number]);
     }
-    
+
     return returnTags;
   }
 

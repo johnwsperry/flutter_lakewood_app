@@ -1,8 +1,8 @@
 import 'package:latlong2/latlong.dart';
 
-import 'mapData.dart';
-import 'houseDatabaseLocation.dart';
 import '../Enums/sortTag.dart';
+import 'houseDatabaseLocation.dart';
+import 'mapData.dart';
 
 class HouseDatabaseTable{
   //Contains data and allows for it to be queried.
@@ -12,14 +12,17 @@ class HouseDatabaseTable{
 
 
   //Getters
+  /// Returns all the data in a list
   List<MapData> getAllData(){
     return data;
   }
 
+  /// Gets the house data by its id
   MapData getDataByID(int id){
     return data[id];
   }
 
+  ///Gets all data that has the corresponding name
   Iterable<MapData>? getAllDataByName(String name){
     //Tries to get the data using firstWhere
     try {
@@ -29,6 +32,7 @@ class HouseDatabaseTable{
     }
   }
 
+  ///Gets all data that has the corresponding address
   Iterable<MapData>? getAllDataByAddress(String address){
     //Tries to get the data using firstWhere
     try {
@@ -38,6 +42,7 @@ class HouseDatabaseTable{
     }
   }
 
+  ///Gets all data that has the corresponding yearBuilt
   Iterable<MapData>? getAllDataByYearBuilt(String yearBuilt){
     //Tries to get the data using firstWhere
     try {
@@ -47,6 +52,7 @@ class HouseDatabaseTable{
     }
   }
 
+  ///Gets all data that has the corresponding shortDescription
   Iterable<MapData>? getAllDataByShortDescription(String shortDescription){
     //Tries to get the data using firstWhere
     try {
@@ -56,6 +62,7 @@ class HouseDatabaseTable{
     }
   }
 
+  ///Gets all data that has the corresponding description
   Iterable<MapData>? getAllDataByDescription(String description){
     //Tries to get the data using firstWhere
     try {
@@ -65,6 +72,7 @@ class HouseDatabaseTable{
     }
   }
 
+  ///Gets all data that has the corresponding location
   Iterable<MapData>? getAllDataByLocation(LatLng location){
     //Tries to get the data using firstWhere
     try {
@@ -74,6 +82,7 @@ class HouseDatabaseTable{
     }
   }
 
+  ///Gets all data that has the corresponding imageCount
   Iterable<MapData>? getAllDataByImageCount(int imageCount){
     //Tries to get the data using firstWhere
     try {
@@ -83,6 +92,7 @@ class HouseDatabaseTable{
     }
   }
 
+  ///Gets all data that has the corresponding tag
   Iterable<MapData>? getAllDataBySortTag(SortTag tag){
     //Tries to get the data using firstWhere
     try {

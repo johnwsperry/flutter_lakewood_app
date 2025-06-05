@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:latlong2/latlong.dart';
 
 @Deprecated("Use mapData! Will be removed soon!")
 class House {
@@ -43,7 +43,7 @@ Future<String> getAddress(double lat, double long) async {
   List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
   return "${placemarks[0].street}, ${placemarks[0].locality}";
 
-  /* 
+  /*
     Here are the options for an example location coord (45.413338, -122.667718):
     Each can be accessed through the object (ex: placemarkObj.postalCode would get you 97034). Docs: https://pub.dev/documentation/geocoding_platform_interface/latest/geocoding_platform_interface/Placemark-class.html
 
