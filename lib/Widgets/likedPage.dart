@@ -70,20 +70,21 @@ class _LikedPageState extends State<LikedPage> {
                               border: Border.all(color: Colors.black, width: 2),
                             ),
                             child: SizedBox(
-                                height: 100,
-                                child: Column(
+                              height: 100,
+                              child: Column(
                                 children: [
                                   Spacer(),
                                   Padding(
-                                      padding: EdgeInsets.all(4),
-                                      child: Text(
-                                        "You don't have any liked homes yet! Any building you mark as liked on the map will show up here.", textAlign: TextAlign.center,
-                                      ),
+                                    padding: EdgeInsets.all(4),
+                                    child: Text(
+                                      "You don't have any liked homes yet! Any building you mark as liked on the map will show up here.",
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
-                                  Spacer()
+                                  Spacer(),
                                 ],
-                                                            ),
                               ),
+                            ),
                           ),
                         ),
                       )
@@ -175,8 +176,8 @@ class _LikedPageState extends State<LikedPage> {
 
                                                 child: FloatingActionButton(
                                                   mini: true,
-                                                  heroTag:
-                                                      null, // can give this an unique tag for hero animations
+                                                  heroTag: null,
+                                                  // can give this an unique tag for hero animations
                                                   child: Icon(Icons.star),
                                                   onPressed: () {
                                                     _removeLike(index);

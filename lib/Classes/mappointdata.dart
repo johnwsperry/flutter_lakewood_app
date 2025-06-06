@@ -13,10 +13,16 @@ class MapPointData {
 
   int locationTime; //The time in Unix Timestamp. Displayed Somewhere idk.
 
-  DateTime getDateTime(){
+  DateTime getDateTime() {
     return DateTime.fromMicrosecondsSinceEpoch(locationTime);
   }
 
-
-  MapPointData(this.location, this.image1FilePath, this.image2FilePath, this.locationDescription, this.locationName, this.locationTime);
+  MapPointData(
+    this.location,
+    this.image1FilePath,
+    this.image2FilePath,
+    this.locationDescription,
+    this.locationName,
+    this.locationTime,
+  );
 }

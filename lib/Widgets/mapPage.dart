@@ -1,12 +1,12 @@
-﻿import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
-import 'package:testing/Classes/house.dart';
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
+import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:testing/Classes/house.dart';
+
 import '../globalVars.dart';
 import 'housePage.dart';
-import '../Util/databases.dart' as databases;
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});
@@ -72,7 +72,8 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   void closePin({bool usingBuild = false}) {
     //Recenter TODO: Change settings maybe?
     updateCenter(selectedPin!, refocusZoom);
-    WidgetsBinding.instance.addPostFrameCallback((_) { // Don't remove this; it's needed for closing the pin while another page is being built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Don't remove this; it's needed for closing the pin while another page is being built
       setState(() {
         selectedPin = null;
       });
@@ -110,8 +111,10 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     entry = OverlayEntry(
       builder:
           (context) => Positioned(
-            height: size.height * widgetHeight, //TODO: DESIGNER
-            width: size.width * widgetWidth, //TODO: DESIGNER
+            height: size.height * widgetHeight,
+            //TODO: DESIGNER
+            width: size.width * widgetWidth,
+            //TODO: DESIGNER
             right: right,
             top: top,
             child: aiMapOverlayMenu(),
@@ -131,9 +134,8 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
 
   //Ai test TODO
   Widget aiMapOverlayMenu() {
-
     int index = findHouse(selectedPin);
-  
+
     return DefaultTextStyle(
       style: TextStyle(fontFamily: 'robotoSlab', color: Colors.black),
       child: Container(
@@ -153,14 +155,17 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(child: Container(decoration: BoxDecoration(image: DecorationImage(image: allHomes[index].image))
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: allHomes[index].image),
+                ),
               ),
             ),
             Text(
               allHomes[index].address,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 24),
-      
             ),
             const SizedBox(height: 16),
             ElevatedButton(
@@ -174,10 +179,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                   MaterialPageRoute(
                     builder: (BuildContext context) {
                       closePin();
-                      return HousePage(
-                        houseIndex: index,
-                        isLiked: false,
-                      );
+                      return HousePage(houseIndex: index, isLiked: false);
                     },
                   ),
                 );

@@ -4,7 +4,6 @@ import 'package:latlong2/latlong.dart';
 
 @Deprecated("Use mapData! Will be removed soon!")
 class House {
-
   // eventually replace image with a List<AssetImage> of images if we get more
 
   final int id;
@@ -20,7 +19,7 @@ class House {
     required this.address,
     required this.description,
     required this.image,
-    LatLng? location
+    LatLng? location,
   }) : location = location ?? const LatLng(0, 0);
 }
 

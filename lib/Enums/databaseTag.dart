@@ -1,3 +1,1 @@
-enum DatabaseTag{
-  oregon,
-}
+enum DatabaseTag { oregon }

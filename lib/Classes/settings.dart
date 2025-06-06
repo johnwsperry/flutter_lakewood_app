@@ -1,6 +1,3 @@
-﻿
-
-class Settings {
+﻿class Settings {
   //final int id;
-
 }

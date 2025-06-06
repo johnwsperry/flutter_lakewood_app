@@ -1,22 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:testing/Classes/house.dart';
 import 'package:testing/globalVars.dart';
-
 
 class HousePage extends StatelessWidget {
   final int houseIndex;
   final bool isLiked;
 
-  const HousePage({
-    super.key,
-    required this.houseIndex,
-    this.isLiked = true,
-    });
+  const HousePage({super.key, required this.houseIndex, this.isLiked = true});
 
   @override
   Widget build(BuildContext context) {
-    final House house = (isLiked) ? likedHomes[houseIndex] : allHomes[houseIndex];
+    final House house =
+        (isLiked) ? likedHomes[houseIndex] : allHomes[houseIndex];
     return Scaffold(
       appBar: bar,
       body: Center(

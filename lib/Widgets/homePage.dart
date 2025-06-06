@@ -1,5 +1,4 @@
-﻿
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:testing/Classes/house.dart';
 import 'package:testing/Widgets/settingsPage.dart';
@@ -23,28 +22,28 @@ class HomePageState extends State<HomePage> {
   int _currentIndex = -1;
 
   Future<void> loadHomes() async {
-      List<LatLng> locations = [];
+    List<LatLng> locations = [];
 
-      //TODO: replace this with actually fetching the items from the database lol
+    //TODO: replace this with actually fetching the items from the database lol
 
-      locations.add(const LatLng(45.413338, -122.667718));
-      locations.add(const LatLng(45.412787, -122.669757));
-      locations.add(const LatLng(45.412907, -122.670082));
-      locations.add(const LatLng(45.413012, -122.670346));
-      locations.add(const LatLng(45.413099, -122.670572));
+    locations.add(const LatLng(45.413338, -122.667718));
+    locations.add(const LatLng(45.412787, -122.669757));
+    locations.add(const LatLng(45.412907, -122.670082));
+    locations.add(const LatLng(45.413012, -122.670346));
+    locations.add(const LatLng(45.413099, -122.670572));
 
-      for (LatLng location in locations) {
-        allHomes.add(
-          House(
-            name: "Home",
-            address: await getAddress(location.latitude, location.longitude),
-            description: "this is a description of what the house is like",
-            image: AssetImage("resources/assets/houseplaceholder1.png"),
-            location: location,
-          ),
-        );
-      }
+    for (LatLng location in locations) {
+      allHomes.add(
+        House(
+          name: "Home",
+          address: await getAddress(location.latitude, location.longitude),
+          description: "this is a description of what the house is like",
+          image: AssetImage("resources/assets/houseplaceholder1.png"),
+          location: location,
+        ),
+      );
     }
+  }
 
   @override
   void initState() {
@@ -119,9 +118,7 @@ class HomePageState extends State<HomePage> {
 
     Widget matchPage = Scaffold(
       appBar: bar,
-      body: Center(
-        child: Text("This is the matchmaker page!"),
-      ),
+      body: Center(child: Text("This is the matchmaker page!")),
     );
 
     Widget settingsPage = SettingsPage();
@@ -160,10 +157,7 @@ class HomePageState extends State<HomePage> {
           type: BottomNavigationBarType.fixed,
           onTap: pageSwitch,
           items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: "Map"
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
 
             BottomNavigationBarItem(
               icon: Icon(Icons.thumb_up),

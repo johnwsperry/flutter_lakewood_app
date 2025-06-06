@@ -1,5 +1,1 @@
-
-enum SortTag{
-  home,
-
-}
+enum SortTag { home }

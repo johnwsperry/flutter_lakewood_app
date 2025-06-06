@@ -26,7 +26,6 @@ class _SettingsPageState extends State<SettingsPage> {
         appBar: bar,
         body: ListView(
           children: [
-
             Divider(),
             SwitchListTile(
               subtitle: const Text("Testing Switch"),
@@ -108,7 +107,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             Divider(),
-
           ],
         ),
       ),
