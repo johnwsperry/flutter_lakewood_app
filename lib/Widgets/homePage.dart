@@ -1,12 +1,12 @@
 ﻿
 import 'package:flutter/material.dart';
+import 'package:testing/Widgets/settingsPage.dart';
+import 'mapPage.dart';
+import 'likedPage.dart';
+import 'package:testing/Theme/themes.dart';
+import 'package:testing/globleVars.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:testing/Classes/house.dart';
-import 'package:testing/Widgets/settingsPage.dart';
-import 'package:testing/globalVars.dart';
-
-import 'likedPage.dart';
-import 'mapPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -53,7 +53,7 @@ class HomePageState extends State<HomePage> {
     loadHomes();
 
     homePage = Scaffold(
-      appBar: bar,
+      appBar: getBar(), 
 
       body: Container(
         decoration: BoxDecoration(
@@ -118,7 +118,7 @@ class HomePageState extends State<HomePage> {
     Widget likedPage = LikedPage();
 
     Widget matchPage = Scaffold(
-      appBar: bar,
+      appBar: getBar(),
       body: Center(
         child: Text("This is the matchmaker page!"),
       ),
@@ -153,7 +153,9 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       home: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: widgetOptions.elementAt(_currentIndex + 1),
 
         bottomNavigationBar: BottomNavigationBar(
