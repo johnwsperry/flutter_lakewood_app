@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:crypto/crypto.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
@@ -33,7 +32,7 @@ class DatabaseHelper {
       databaseFactory = databaseFactoryFfi;
     }
 
-    //cloneHouses();
+    cloneHouses();
 
     var path = join(await getDatabasesPath(), global_vars.homesName);
 
