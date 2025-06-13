@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:testing/globleVars.dart';
 import 'package:testing/Classes/house.dart';
+import 'package:testing/globalVars.dart';
+
 import 'housePage.dart';
 
 class LikedPage extends StatefulWidget {

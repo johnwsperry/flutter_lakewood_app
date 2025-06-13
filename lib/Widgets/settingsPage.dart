@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testing/globleVars.dart';
 import 'package:testing/Classes/bodytext.dart';
+import 'package:testing/globalVars.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -26,7 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
         appBar: getBar(),
         body: ListView(
           children: [
-             
+
             Divider(),
             SwitchListTile(
               subtitle: const Text("Testing Switch"),
@@ -108,7 +108,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             Divider(),
-             
+
           ],
         ),
       ),

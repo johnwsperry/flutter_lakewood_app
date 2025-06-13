@@ -1,5 +1,0 @@
-﻿How to use database
-Step 1: import the Database/databases.dart file
-Step 2: in a async function, you can get all of the houses(as a List<MapData>)using await houses();
-Step 3: ???
-Step 4: Profit

@@ -5,8 +5,8 @@ import 'mapPage.dart';
 import 'likedPage.dart';
 import 'package:testing/Theme/themes.dart';
 import 'package:testing/globleVars.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:testing/Classes/house.dart';
-import 'package:latlong2/latlong.dart'; 
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,9 +22,9 @@ class HomePageState extends State<HomePage> {
 
   int _currentIndex = -1;
 
-  Future<void> loadHomes() async { 
-      List<LatLng> locations = []; 
-    
+  Future<void> loadHomes() async {
+      List<LatLng> locations = [];
+
       //TODO: replace this with actually fetching the items from the database lol
 
       locations.add(const LatLng(45.413338, -122.667718));

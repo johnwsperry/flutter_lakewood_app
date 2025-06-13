@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:testing/globleVars.dart';
 import 'package:testing/Classes/house.dart';
+import 'package:testing/globalVars.dart';
 
 
 class HousePage extends StatelessWidget {
@@ -9,7 +9,7 @@ class HousePage extends StatelessWidget {
   final bool isLiked;
 
   const HousePage({
-    super.key, 
+    super.key,
     required this.houseIndex,
     this.isLiked = true,
     });
