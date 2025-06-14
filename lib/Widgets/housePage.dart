@@ -1,24 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'package:testing/Classes/house.dart';
-import 'package:testing/globalVars.dart';
-
+import 'package:testing/Classes/mapData.dart';
 
 class HousePage extends StatelessWidget {
   final int houseIndex;
   final bool isLiked;
 
-  const HousePage({
-    super.key,
-    required this.houseIndex,
-    this.isLiked = true,
-    });
+  const HousePage({super.key, required this.houseIndex, this.isLiked = true});
 
   @override
   Widget build(BuildContext context) {
-    final House house = (isLiked) ? likedHomes[houseIndex] : allHomes[houseIndex];
+    final MapData house =
+        (isLiked) ? likedHomes[houseIndex] : allHomes[houseIndex];
     return Scaffold(
-      appBar: bar,
+      appBar: AppBar(
+        backgroundColor: Colors.indigoAccent,
+        title: Text(house.address, 
+        style: TextStyle(color: Colors.white)),
+      ),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(16),
@@ -29,7 +28,7 @@ class HousePage extends StatelessWidget {
                 flex: 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image(image: house.image, fit: BoxFit.cover),
+                  child: Image(image: house.images[0], fit: BoxFit.cover),
                 ),
               ),
               Divider(),
@@ -57,6 +56,17 @@ class HousePage extends StatelessWidget {
                           fontStyle: FontStyle.italic,
                           fontFamily: "robotoSlab",
                           fontSize: 24,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        "Built in ${house.yearBuilt}",
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          fontFamily: "robotoSlab",
+                          fontSize: 18,
                         ),
                       ),
                     ),

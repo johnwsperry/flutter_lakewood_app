@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:testing/Classes/mapData.dart';
 
 @Deprecated("Use mapData! Will be removed soon!")
 class House {
@@ -13,6 +14,8 @@ class House {
   final String description;
   final AssetImage image;
   final LatLng location;
+  final int yearBuilt;
+  final String type;
 
   const House({
     this.id = 0,
@@ -20,13 +23,20 @@ class House {
     required this.address,
     required this.description,
     required this.image,
-    LatLng? location
-  }) : location = location ?? const LatLng(0, 0);
+    this.location = const LatLng(0, 0),
+    this.yearBuilt = 1990,
+    this.type = "House",
+  });
+
+  String getCleanAddress() {
+    return address.split(",")[0];
+  }
+
 }
 
-List<House> likedHomes = [];
+List<MapData> likedHomes = [];
 
-List<House> allHomes = [];
+List<MapData> allHomes = [];
 
 int findHouse(LatLng? loc) {
   if (loc != null) {
@@ -39,7 +49,7 @@ int findHouse(LatLng? loc) {
   return -1;
 }
 
-Future<String> getAddress(double lat, double long) async {
+Future<String> getAddress(double lat, double long, {bool clean = false}) async {
   List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
   return "${placemarks[0].street}, ${placemarks[0].locality}";
 

@@ -15,28 +15,19 @@ class _LikedPageState extends State<LikedPage> {
   @override
   void initState() {
     super.initState();
-
-    // This is for debug-- fills likedHomes with 20 placeholder homes.
-
-    /*
-    if (likedHomes.isEmpty) {
-    for (int i = 1; i <= 20; i++) {
-      likedHomes.add(
-        House(
-          name: "Home $i",
-          address: "${i + 122} Street Rd",
-          description: "this is a description of what the house is like",
-          image: AssetImage("resources/assets/houseplaceholder${i % 3 + 1}.png"),
-        ),
-      );
-    }}
-    */
   }
 
   void _removeLike(int index) {
     if (likedHomes.isEmpty) return;
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.removeCurrentSnackBar();
     setState(() {
-      // maybe put an animation here?
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text('Removed ${likedHomes[index].address} from liked homes!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
       likedHomes.removeAt(index);
     });
   }
@@ -129,7 +120,7 @@ class _LikedPageState extends State<LikedPage> {
                                           bottomLeft: Radius.circular(15),
                                         ),
                                         child: Image(
-                                          image: house.image,
+                                          image: house.images[0],
                                           fit: BoxFit.cover,
                                           height: double.infinity,
                                         ),

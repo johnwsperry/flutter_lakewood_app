@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'Util/databases.dart' as database;
 import 'Widgets/homePage.dart';
 
-
 bool debugMode = true; // TURN THIS OFF WHEN WE PUBLISH THE APP
 
 void main() {
@@ -16,6 +15,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    return MaterialApp(
+      home: HomePage(),
+      //theme: lightMode,
+      //darkTheme: darkMode,
+    );
   }
 }
