@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return MaterialApp(
       home: Scaffold(
-        appBar: getBar(),
+        appBar: bar,
         body: ListView(
           children: [
 

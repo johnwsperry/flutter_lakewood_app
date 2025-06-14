@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:testing/Classes/mapData.dart';
 
 @Deprecated("Use mapData! Will be removed soon!")
 class House {
@@ -33,9 +34,9 @@ class House {
 
 }
 
-List<House> likedHomes = [];
+List<MapData> likedHomes = [];
 
-List<House> allHomes = [];
+List<MapData> allHomes = [];
 
 int findHouse(LatLng? loc) {
   if (loc != null) {

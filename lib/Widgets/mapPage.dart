@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:testing/Classes/mapData.dart';
 import '../globalVars.dart';
 import 'housePage.dart';
 import '../Util/databases.dart' as databases;
@@ -161,7 +162,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                     child: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: allHomes[index].image,
+                          image: allHomes[index].images[0],
                           fit: BoxFit.fitHeight,
                         ),
                       ),
@@ -276,13 +277,13 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     if (gettingCords) {
       return testMap(context);
     }
-    return Scaffold(appBar: getBar(), body: map(context));
+    return Scaffold(appBar: bar, body: map(context));
   }
 
   MarkerLayer getLayer(BuildContext context) {
     List<Marker> markers = [];
 
-    for (House house in allHomes) {
+    for (MapData house in allHomes) {
       markers.add(
         Marker(
           point: house.location,
