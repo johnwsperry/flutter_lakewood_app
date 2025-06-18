@@ -1,16 +1,21 @@
+//Add code comments
+//Were you coding in txt or smth?
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
-import '../Database/house_data.dart';
+import 'package:testing/Classes/mapData.dart';
+import '../Classes/house.dart';
+import '../Util/databases.dart';
 
 class RandomHouseGenerator extends StatelessWidget {
   const RandomHouseGenerator({super.key});
 
-  House getHouseOfTheDay() {
+  Future<MapData> getHouseOfTheDay() async {
     final date = DateFormat('yyyy-MM-dd').format(DateTime.now());
     final hash = date.hashCode;
-    final index = hash.abs() % houseList.length;
-    return houseList[index];
+    var allHouses = (await Databases.queryHousesById(0)).data;
+    final index = hash.abs() % allHouses.length;
+    return allHouses[index];
   }
 
   @override
@@ -24,7 +29,7 @@ class RandomHouseGenerator extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(house.imagePath, fit: BoxFit.cover),
+          Image.asset(house, fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
