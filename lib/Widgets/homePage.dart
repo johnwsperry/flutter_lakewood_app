@@ -7,6 +7,25 @@ import 'package:testing/globalVars.dart';
 
 import 'likedPage.dart';
 import 'mapPage.dart';
+import '../Widgets/RandomHouseGenerator.dart';
+import '../Widgets/houseOfTheDay.dart';
+
+// Inside your widget tree
+const RandomHouseGenerator(),
+bar = AppBar(
+  title: Text("Lakewood"),
+  centerTitle: true,
+  backgroundColor: Colors.blueAccent,
+  elevation: 0,
+  actions: [
+    IconButton(
+      icon: Icon(Icons.search),
+      onPressed: () {
+        // Add search functionality here
+      },
+    ),
+  ],
+);
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
