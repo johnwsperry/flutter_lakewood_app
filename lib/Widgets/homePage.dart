@@ -1,12 +1,16 @@
 ﻿
 import 'package:flutter/material.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:testing/Widgets/settingsPage.dart';
+import 'mapPage.dart';
+import 'likedPage.dart';
+import 'package:testing/Theme/themes.dart';
+import 'package:testing/globalVars.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:testing/Classes/house.dart';
-import 'package:testing/Widgets/settingsPage.dart';
-import 'package:testing/globalVars.dart';
-
-import 'likedPage.dart';
-import 'mapPage.dart';
+import 'package:testing/Classes/databaseTables.dart';
+import 'package:testing/Classes/mapData.dart';
+import 'package:testing/Util/databases.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,38 +26,24 @@ class HomePageState extends State<HomePage> {
 
   int _currentIndex = -1;
 
-  Future<void> loadHomes() async {
-      List<LatLng> locations = [];
-
-      //TODO: replace this with actually fetching the items from the database lol
-
-      locations.add(const LatLng(45.413338, -122.667718));
-      locations.add(const LatLng(45.412787, -122.669757));
-      locations.add(const LatLng(45.412907, -122.670082));
-      locations.add(const LatLng(45.413012, -122.670346));
-      locations.add(const LatLng(45.413099, -122.670572));
-
-      for (LatLng location in locations) {
-        allHomes.add(
-          House(
-            name: "Home",
-            address: await getAddress(location.latitude, location.longitude),
-            description: "this is a description of what the house is like",
-            image: AssetImage("resources/assets/houseplaceholder1.png"),
-            location: location,
-          ),
-        );
-      }
-    }
-
   @override
   void initState() {
     super.initState();
 
-    loadHomes();
+    Future<void> loadHomes() async {
+      HouseDatabaseTable dbTable = await Databases.queryHousesByPath("lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite");
+      allHomes = dbTable.getAllData();
+      
+      debugPrint("${allHomes.length}"); 
 
+      for (MapData pt in allHomes) {
+        debugPrint("${pt.name}, ${pt.address}");
+      }
+    }
+
+    loadHomes();
     homePage = Scaffold(
-      appBar: bar,
+      appBar: bar, 
 
       body: Container(
         decoration: BoxDecoration(
@@ -153,7 +143,9 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       home: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: widgetOptions.elementAt(_currentIndex + 1),
 
         bottomNavigationBar: BottomNavigationBar(

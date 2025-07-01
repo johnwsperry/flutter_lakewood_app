@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:testing/Classes/mapData.dart';
 import '../globalVars.dart';
 import 'housePage.dart';
 import '../Util/databases.dart' as databases;
@@ -69,10 +70,11 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   }
 
   //This should be a button event that closes the overlay
-  void closePin({bool usingBuild = false}) {
+  void closePin() {
     //Recenter TODO: Change settings maybe?
     updateCenter(selectedPin!, refocusZoom);
-    WidgetsBinding.instance.addPostFrameCallback((_) { // Don't remove this; it's needed for closing the pin while another page is being built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Don't remove this ^^ ; it's needed for closing the pin while another page is being built
       setState(() {
         selectedPin = null;
       });
@@ -131,9 +133,8 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
 
   //Ai test TODO
   Widget aiMapOverlayMenu() {
-
     int index = findHouse(selectedPin);
-  
+
     return DefaultTextStyle(
       style: TextStyle(fontFamily: 'robotoSlab', color: Colors.black),
       child: Container(
@@ -148,41 +149,89 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
           children: [
-            Expanded(child: Container(decoration: BoxDecoration(image: DecorationImage(image: allHomes[index].image))
-              ),
-            ),
-            Text(
-              allHomes[index].address,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 24),
-      
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: closePin,
-              child: const Text("Close Overlay"),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      closePin();
-                      return HousePage(
-                        houseIndex: index,
-                        isLiked: false,
+            Padding(
+              padding: const EdgeInsets.only(left: 15, bottom: 15, right: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 150,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: allHomes[index].images[0],
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    allHomes[index].address,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: closePin,
+                    child: const Text("Close Overlay"),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          //maintainState: true,
+                          builder: (BuildContext context) {
+                            closePin();
+                            return HousePage(houseIndex: index, isLiked: false);
+                          },
+                        ),
                       );
                     },
+                    child: const Text("Deep Dive"),
                   ),
-                );
-              },
-              child: const Text("Deep Dive"),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 17,
+              right: 4,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(shape: CircleBorder()),
+                onPressed: () {
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.removeCurrentSnackBar();
+
+                  setState(() {
+                    if (likedHomes.contains(allHomes[index])) {
+                      likedHomes.remove(allHomes[index]);
+                      messenger.showSnackBar(
+                        SnackBar(
+                          content: Text('Removed from liked homes! $index'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    } else {
+                      likedHomes.add(allHomes[index]);
+                      messenger.showSnackBar(
+                        SnackBar(
+                          content: Text('Added to liked homes! $index'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  });
+                },
+                child: Icon(
+                  (likedHomes.contains(allHomes[index]))
+                      ? Icons.star
+                      : Icons.star_border,
+                ),
+              ),
             ),
           ],
         ),
@@ -234,7 +283,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   MarkerLayer getLayer(BuildContext context) {
     List<Marker> markers = [];
 
-    for (House house in allHomes) {
+    for (MapData house in allHomes) {
       markers.add(
         Marker(
           point: house.location,
