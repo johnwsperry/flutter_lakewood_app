@@ -33,11 +33,13 @@ class House {
   }
 
 }
-
+@Deprecated("Use mapData! Will be removed soon!")
 List<MapData> likedHomes = [];
 
+@Deprecated("Use mapData! Will be removed soon!")
 List<MapData> allHomes = [];
 
+@Deprecated("Use mapData! Will be removed soon!")
 int findHouse(LatLng? loc) {
   if (loc != null) {
     for (int index = 0; index < allHomes.length; index++) {
@@ -49,6 +51,7 @@ int findHouse(LatLng? loc) {
   return -1;
 }
 
+@Deprecated("Use mapData! Will be removed soon!")
 Future<String> getAddress(double lat, double long, {bool clean = false}) async {
   List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
   return "${placemarks[0].street}, ${placemarks[0].locality}";
