@@ -12,6 +12,7 @@ import 'package:testing/Classes/databaseTables.dart';
 import 'package:testing/Classes/mapData.dart';
 import 'package:testing/Util/databases.dart';
 
+///This is the homepage where everything is plonked on top of apparently
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 

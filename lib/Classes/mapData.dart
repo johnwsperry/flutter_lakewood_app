@@ -26,7 +26,7 @@ class MapData{
     location = LatLng(locationLa, locationLo);
     images = [];
     for(int i = 0; i < imageCount; i++){
-      images.add(AssetImage("assets/houses/$id-$i.png"));
+      images.add(AssetImage("resources/assets/houses/$id-$i.png"));
     }
     tags = stringToTags(inputTags);
   }

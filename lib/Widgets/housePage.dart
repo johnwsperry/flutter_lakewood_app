@@ -3,19 +3,18 @@ import 'package:testing/Classes/house.dart';
 import 'package:testing/Classes/mapData.dart';
 
 class HousePage extends StatelessWidget {
-  final int houseIndex;
+  final MapData data;
   final bool isLiked;
 
-  const HousePage({super.key, required this.houseIndex, this.isLiked = true});
+  const HousePage({super.key, required this.data, this.isLiked = true});
 
   @override
   Widget build(BuildContext context) {
-    final MapData house =
-        (isLiked) ? likedHomes[houseIndex] : allHomes[houseIndex];
+    //Create the scaffold using the data from MapData.
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.indigoAccent,
-        title: Text(house.address, 
+        title: Text(data.address,
         style: TextStyle(color: Colors.white)),
       ),
       body: Center(
@@ -28,7 +27,7 @@ class HousePage extends StatelessWidget {
                 flex: 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image(image: house.images[0], fit: BoxFit.cover),
+                  child: Image(image: data.images[0], fit: BoxFit.cover),
                 ),
               ),
               Divider(),
@@ -39,7 +38,7 @@ class HousePage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        house.name,
+                        data.name,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -51,7 +50,7 @@ class HousePage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        house.address,
+                        data.address,
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontFamily: "robotoSlab",
@@ -62,7 +61,7 @@ class HousePage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        "Built in ${house.yearBuilt}",
+                        "Built in ${data.yearBuilt}",
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontFamily: "robotoSlab",
@@ -83,7 +82,7 @@ class HousePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
-                          house.description,
+                          data.description,
                           style: TextStyle(
                             fontFamily:
                                 "robotoSlab", //IDEALLY FIND A NEW FONT FOR THIS

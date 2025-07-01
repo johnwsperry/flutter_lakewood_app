@@ -12,6 +12,7 @@ class LikedPage extends StatefulWidget {
 }
 
 class _LikedPageState extends State<LikedPage> {
+  //WTH
   @override
   void initState() {
     super.initState();
@@ -44,12 +45,15 @@ class _LikedPageState extends State<LikedPage> {
               flex: 1,
               child: Text(
                 "This spot is a bar that you can put text in or whatever",
+                //Gee thanks leon
               ),
             ),
             Spacer(flex: 1),
+            //Main content depending on the condition of LikedHomes
             Flexible(
               flex: 20,
               child:
+                  //If statement
                   likedHomes.isEmpty
                       ? Center(
                         child: Padding(
@@ -103,7 +107,7 @@ class _LikedPageState extends State<LikedPage> {
                                   MaterialPageRoute(
                                     builder:
                                         (context) =>
-                                            HousePage(houseIndex: index),
+                                            HousePage(data: house),
                                   ),
                                 );
                               },

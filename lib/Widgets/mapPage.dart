@@ -9,6 +9,7 @@ import '../globalVars.dart';
 import 'housePage.dart';
 import '../Util/databases.dart' as databases;
 
+/// This is the map page, responsible for creating and dealing with the map.
 class MapPage extends StatefulWidget {
   const MapPage({super.key, required this.title});
 
@@ -19,6 +20,7 @@ class MapPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapPage> with TickerProviderStateMixin {
+
   late final _animatedMapController = AnimatedMapController(
     vsync: this,
     duration: Duration(milliseconds: focusAnimationDuration),
@@ -26,10 +28,43 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     cancelPreviousAnimations: true,
   );
 
-  LatLng? selectedPin;
+  //This is the map
+  late Future<MarkerLayer> _mapData;
+
+  ///The current selected pin
+  MapData? selectedPin;
   OverlayEntry? entry;
 
-  bool gettingCords = false;
+  ///Grabs the data from database. Call on init
+  Future<MarkerLayer> _getMarkerDataFromDatabase() async {
+    List<Marker> markers = [];
+
+    //Compile the data using the table in databases.
+    for (MapData house in (await databases.Databases.queryHousesByPath(
+        "lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite"))
+        .data) {
+      markers.add(
+        Marker(
+          point: house.location,
+          width: mapIconWidth,
+          height: mapIconHeight,
+          alignment: Alignment.topCenter,
+          child: GestureDetector(
+            onTap: () {
+              onPinClickEvent(house);
+            },
+            child: Icon(
+              Icons.location_pin,
+              size: mapIconSize,
+              color: Colors.red,
+            ),
+          ),
+        ),
+      );
+    }
+    //Return the compiled item
+    return MarkerLayer(markers: markers);
+  }
 
   //Use this for updating center cus cleaner
   void updateCenter(LatLng center, double zoom) {
@@ -37,8 +72,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   }
 
   //The event that is called when the overlay is opened.
-  void onPinClickEvent(LatLng center) {
-    //Testing event TODO
+  void onPinClickEvent(MapData data) {
     //Move and update pin.
     if (selectedPin == null) {
       bool isWide = false;
@@ -51,19 +85,19 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
       //Change the pin pos if the window size is long.
       if (isWide) {
         newCenter = LatLng(
-          center.latitude,
-          center.longitude + wideCenterOffset * latLongMultiplier,
+          data.location.latitude,
+          data.location.longitude + wideCenterOffset * latLongMultiplier,
         );
       } else {
         newCenter = LatLng(
-          center.latitude + longCenterOffset * latLongMultiplier,
-          center.longitude,
+          data.location.latitude + longCenterOffset * latLongMultiplier,
+          data.location.longitude,
         );
       }
 
       updateCenter(newCenter, focusZoom);
       setState(() {
-        selectedPin = center;
+        selectedPin = data;
       });
       showOverlay();
     }
@@ -72,7 +106,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   //This should be a button event that closes the overlay
   void closePin() {
     //Recenter TODO: Change settings maybe?
-    updateCenter(selectedPin!, refocusZoom);
+    updateCenter(selectedPin!.location, refocusZoom);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Don't remove this ^^ ; it's needed for closing the pin while another page is being built
       setState(() {
@@ -116,7 +150,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
             width: size.width * widgetWidth, //TODO: DESIGNER
             right: right,
             top: top,
-            child: aiMapOverlayMenu(),
+            child: mapOverlayMenu(),
           ),
     );
 
@@ -132,8 +166,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   }
 
   //Ai test TODO
-  Widget aiMapOverlayMenu() {
-    int index = findHouse(selectedPin);
+  Widget mapOverlayMenu() {
 
     return DefaultTextStyle(
       style: TextStyle(fontFamily: 'robotoSlab', color: Colors.black),
@@ -149,6 +182,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
             ),
           ],
         ),
+        //Create the stack
         child: Stack(
           children: [
             Padding(
@@ -157,28 +191,32 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  //Top box with image
                   SizedBox(
                     height: 150,
                     child: Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: allHomes[index].images[0],
+                          image: selectedPin!.images[0],
                           fit: BoxFit.fitHeight,
                         ),
                       ),
                     ),
                   ),
+                  //Text box with the address
                   const SizedBox(height: 8),
                   Text(
-                    allHomes[index].address,
+                    selectedPin!.address,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 24),
                   ),
+                  //A button to close the overlay
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: closePin,
                     child: const Text("Close Overlay"),
                   ),
+                  //A button to init the HousePage
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
@@ -187,7 +225,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                           //maintainState: true,
                           builder: (BuildContext context) {
                             closePin();
-                            return HousePage(houseIndex: index, isLiked: false);
+                            return HousePage(data: selectedPin!, isLiked: false);
                           },
                         ),
                       );
@@ -197,6 +235,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                 ],
               ),
             ),
+            //Notifications?
             Positioned(
               top: 17,
               right: 4,
@@ -207,19 +246,19 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                   messenger.removeCurrentSnackBar();
 
                   setState(() {
-                    if (likedHomes.contains(allHomes[index])) {
-                      likedHomes.remove(allHomes[index]);
+                    if (likedHomes.contains(selectedPin!)) {
+                      likedHomes.remove(selectedPin!);
                       messenger.showSnackBar(
                         SnackBar(
-                          content: Text('Removed from liked homes! $index'),
+                          content: Text('Removed from liked homes!'),
                           duration: Duration(seconds: 2),
                         ),
                       );
                     } else {
-                      likedHomes.add(allHomes[index]);
+                      likedHomes.add(selectedPin!);
                       messenger.showSnackBar(
                         SnackBar(
-                          content: Text('Added to liked homes! $index'),
+                          content: Text('Added to liked homes!'),
                           duration: Duration(seconds: 2),
                         ),
                       );
@@ -227,7 +266,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                   });
                 },
                 child: Icon(
-                  (likedHomes.contains(allHomes[index]))
+                  (likedHomes.contains(selectedPin!))
                       ? Icons.star
                       : Icons.star_border,
                 ),
@@ -239,85 +278,48 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     );
   }
 
-  //TODO: The menu for overlay widget. I pray for whoever has to design a good menu 💀💀💀
-  Widget selectionMenu() {
-    return Container(
-      color: Colors.greenAccent,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text("test", style: TextStyle(fontSize: 25)),
-          const Text("lorum ipson", style: TextStyle(fontSize: 14)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(onPressed: closePin, child: const Text("close")),
-              TextButton(onPressed: test, child: const Text("button2")),
-            ],
-          ),
-        ],
-      ),
+
+  //Initialization and caching of Async Data
+  @override
+  void initState() {
+    super.initState();
+    _mapData = _getMarkerDataFromDatabase();
+    //Get the required data
+  }
+
+  //Building the widget
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: bar, body: FutureBuilder(future: _mapData, builder: (context, snapshot){
+      if (snapshot.hasData) {
+        return map(context, snapshot.data!);
+      } else {
+        return Center(child: CircularProgressIndicator(),);
+      }
+    }
+    )
     );
   }
 
-  //TODO: REMOVE
-  void test() {
-    print("Tested!");
-  }
-
-  //TODO: REMOVE
-  void getTappedCords(TapPosition tapPos, LatLng? location) {
-    print("called");
-    print(location);
-  }
-
+  ///Dispose the widget and overlays
   @override
-  Widget build(BuildContext context) {
-    //TODO: REMOVE
-    if (gettingCords) {
-      return testMap(context);
-    }
-    return Scaffold(appBar: bar, body: map(context));
+  void dispose() {
+    //Hide the overlay
+    hideOverlay();
+    super.dispose();
   }
 
-  MarkerLayer getLayer(BuildContext context) {
-    List<Marker> markers = [];
-
-    for (MapData house in allHomes) {
-      markers.add(
-        Marker(
-          point: house.location,
-          width: mapIconWidth,
-          height: mapIconHeight,
-          alignment: Alignment.topCenter,
-          child: GestureDetector(
-            onTap: () {
-              onPinClickEvent(house.location);
-            },
-            child: Icon(
-              Icons.location_pin,
-              size: mapIconSize,
-              color: Colors.red,
-            ),
-          ),
-        ),
-      );
-    }
-
-    return MarkerLayer(markers: markers);
-  }
-
-  MarkerLayer getSinglePin(BuildContext context, LatLng location) {
+  MarkerLayer getSinglePin(BuildContext context, MapData data) {
     return MarkerLayer(
       markers: [
         Marker(
-          point: location,
+          point: data.location,
           width: mapIconWidth,
           height: mapIconHeight,
           alignment: Alignment.topCenter,
           child: GestureDetector(
             onTap: () {
-              onPinClickEvent(location);
+              onPinClickEvent(data);
             },
             child: Icon(
               Icons.location_pin,
@@ -330,11 +332,11 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget map(BuildContext context) {
+  Widget map(BuildContext context, MarkerLayer inputLayer) {
     MarkerLayer layer;
     //Get the pins
     if (selectedPin == null) {
-      layer = getLayer(context);
+      layer = inputLayer;
     } else {
       layer = getSinglePin(context, selectedPin!);
     }
@@ -361,35 +363,6 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     );
   }
 
-  //This map is for getting cords outputed into console. TODO: REMOVE
-  Widget testMap(BuildContext context) {
-    MarkerLayer layer;
-    //Get the pins
-    if (selectedPin == null) {
-      layer = getLayer(context);
-    } else {
-      layer = getSinglePin(context, selectedPin!);
-    }
-    //get children
-    List<Widget> children = [];
-    children.add(openStreetMapTileLayer);
-    children.add(layer);
-
-    return FlutterMap(
-      options: MapOptions(
-        initialCameraFit: const CameraFit.coordinates(
-          coordinates: [
-            //used https://www.latlong.net/ DON'T USE GOOGLE MAPS!!!
-            LatLng(45.418644, -122.679640), //corner 1
-            LatLng(45.404050, -122.651485), //corner 2
-          ],
-        ),
-        onTap: getTappedCords,
-      ),
-      mapController: _animatedMapController.mapController,
-      children: children,
-    );
-  }
 }
 
 TileLayer get openStreetMapTileLayer => TileLayer(
