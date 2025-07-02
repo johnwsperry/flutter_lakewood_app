@@ -55,15 +55,8 @@ class Databases {
 
   static Future<Database> getHouseDatabase(String path) async {
     setFactory();
-    //Check if opened
-    if(openedDatabases.containsKey(join(await getDatabasesPath(), path))){
-      return openedDatabases[join(await getDatabasesPath(), path)]!;
-    }
-
-    //If not opened, open it
+    //Open the database
     Database database = await _openHouseDatabase("homeData/$path");
-    openedDatabases[join(await getDatabasesPath(), path)] = database;
-
     return database;
   }
 
@@ -120,16 +113,20 @@ class Databases {
   static Future<Database> _openHouseDatabase(String path) async {
     setFactory();
 
-    cloneHouse(path);
-
     return _openDatabase(path, global_vars.mapDataCreation);
   }
 
+  //TODO: This causes a race condition. Look into it.
   static Future<Database> _openDatabase(String path, String? createFunction) async {
+    //Check if cached
+    if(openedDatabases.containsKey(path)){
+      return openedDatabases[path]!;
+    }
     //Set databaseFactory
     setFactory();
 
-    cloneHouse(path);
+    //Check if the database needs to be updated...
+    await cloneHouse(path);
 
 
     //Return the database
@@ -141,13 +138,21 @@ class Databases {
       createFunctionReal = createFunction;
     }
 
-    return await openDatabase(
+    //TODO
+    print("Opened Database!");
+
+    //Cache the database and return it
+
+    var database = await openDatabase(
         join(await getDatabasesPath(), path),
         onCreate: (db, version) {
           return db.execute(createFunctionReal);
         },
         version: global_vars.databaseVersion
     );
+    openedDatabases[path] = database;
+
+    return database;
   }
 
 
@@ -164,13 +169,14 @@ class Databases {
     }
   }
 
-  static void cloneHouse(String path) async {
+  static Future<void> cloneHouse(String path) async {
     setFactory();
 
     //Create the paths
     String databasePath = join(await getDatabasesPath(), path);
 
     bool fileExists = FileSystemEntity.typeSync(databasePath) != FileSystemEntityType.notFound;
+
     //Check for testing
     if(global_vars.resetAllDatabases){
       //when resetting all databases, have the program delete the files than exit. This will create new, empty databases.
