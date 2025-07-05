@@ -1,6 +1,7 @@
 ﻿
 import 'package:flutter/material.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:testing/Widgets/creditsPage.dart';
 import 'package:testing/Widgets/settingsPage.dart';
 import 'mapPage.dart';
 import 'likedPage.dart';
@@ -110,6 +111,8 @@ class HomePageState extends State<HomePage> {
     //Settings
     Widget settingsPage = SettingsPage();
 
+    Widget credits = CreditsPage.creditsPage(bar);
+
     // basic setup for a placeholder page
 
     // Widget PAGENAME = Scaffold(
@@ -125,7 +128,7 @@ class HomePageState extends State<HomePage> {
       mapPage,
       likedPage,
       matchPage,
-      settingsPage,
+      credits,
     ];
   }
 
@@ -163,8 +166,8 @@ class HomePageState extends State<HomePage> {
             ),
 
             BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: "Settings",
+              icon: Icon(Icons.info_outline),
+              label: "Credits",
             ),
           ],
         ),
