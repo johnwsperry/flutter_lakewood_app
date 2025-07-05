@@ -1,6 +1,8 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:testing/Classes/databaseTables.dart';
 import 'package:testing/Classes/houseDatabaseLocation.dart';
+import 'package:testing/Classes/likedHousesTable.dart';
 import 'package:testing/Classes/mapData.dart';
 
 
@@ -49,9 +51,11 @@ String userPackageName = "com.lakeridge.app"; //May need changing
 
 //Databases are stored in the database path, which can be acquired by getDatabasesPath();
 String settingName = "settings.db";
+String likedHousesName = "userData/likedHouses.db";
 String homesName = "homes.sqlite";
 int databaseVersion = 1;
 
+///The creation string fed to Sqlite for creating a database for House Data
 String mapDataCreation = "CREATE TABLE MapData("
     "id INTEGER PRIMARY KEY, "
     "name TEXT NOT NULL, "
@@ -64,6 +68,7 @@ String mapDataCreation = "CREATE TABLE MapData("
     "imageCount INT NOT NULL, "
     "tags TEXT NOT NULL)";
 
+///Takes raw data from a database and converts it into a database for House Data
 HouseDatabaseTable parseMapData(List<Map<String, Object?>> unparsed){
   return HouseDatabaseTable([
     for (final {'id': id as int, 'name': name as String, 'address': address as String, 'yearBuilt': yearBuilt as String, 'shortDescription': shortDescription as String, 'description': description as String, 'locationLa': locationLa as double, 'locationLo': locationLo as double, 'imageCount': imageCount as int, 'tags' : tags as String}
@@ -72,6 +77,7 @@ HouseDatabaseTable parseMapData(List<Map<String, Object?>> unparsed){
   ]);
 }
 
+///The creation string fed to Sqlite for creating a database for House Database Locations
 String houseDbLocationDataCreation = "CREATE TABLE HouseDatabase("
     "id INTEGER PRIMARY KEY, "
     "name TEXT NOT NULL, "
@@ -83,6 +89,7 @@ String houseDbLocationDataCreation = "CREATE TABLE HouseDatabase("
     "tags TEXT NOT NULL"
     ")";
 
+///Takes raw data from a database and converts it into a House Database Location Table
 HouseDatabaseLocationTable parseHouseDbLocationData(List<Map<String, Object?>> unparsed){
   return HouseDatabaseLocationTable([
     for(final {'id': id as int, 'name': name as String, 'description': description as String, 'locationLa': locationLa as double, 'locationLo': locationLo as double, 'radius' : radius as double, 'filepath' : filepath as String, 'tags' : tags as String}
@@ -91,7 +98,23 @@ HouseDatabaseLocationTable parseHouseDbLocationData(List<Map<String, Object?>> u
   ]);
 }
 
+///The creation string fed to Sqlite for creating a database for liked houses
+String likedHousesDbDataCreation = "CREATE TABLE LikedHousesDatabase("
+    "id INTEGER PRIMARY KEY,"
+    "databaseId INTEGER NOT NULL,"
+    "houseId INTEGER NOT NULL,"
+    "likedDate TEXT NOT NULL"
+    ")";
 
+///Takes raw data from a database and converts it into a Liked Houses Table
+Future<LikedHousesTable> parseLikedHousesData(Future<Database> input) async{
+  return LikedHousesTable([
+    for(final {'id': id as int, 'databaseId': databaseId as int, 'houseId' : houseId as int, 'likedDate' : likedDate as String} in await (await input).query("LikedHousesDatabase"))
+      LikedHouseData(id, databaseId, houseId, inputLikedDate: likedDate)
+  ], await input);
+}
+
+///A debug function that works sometimes
 bool resetAllDatabases = false;
 //</editor-fold>
 //</editor-fold>

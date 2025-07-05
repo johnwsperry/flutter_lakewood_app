@@ -11,6 +11,7 @@ import 'package:testing/Classes/house.dart';
 import 'package:testing/Classes/databaseTables.dart';
 import 'package:testing/Classes/mapData.dart';
 import 'package:testing/Util/databases.dart';
+import '../main.dart' as main;
 
 ///This is the homepage where everything is plonked on top of apparently
 class HomePage extends StatefulWidget {
@@ -31,18 +32,6 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    Future<void> loadHomes() async {
-      HouseDatabaseTable dbTable = await Databases.queryHousesByPath("lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite");
-      allHomes = dbTable.getAllData();
-      
-      debugPrint("${allHomes.length}"); 
-
-      for (MapData pt in allHomes) {
-        debugPrint("${pt.name}, ${pt.address}");
-      }
-    }
-
-    loadHomes();
     homePage = Scaffold(
       appBar: bar, 
 
@@ -104,17 +93,21 @@ class HomePageState extends State<HomePage> {
       ),
     );
 
-    Widget mapPage = MapPage(title: "Testing");
+    //Map Page
+    Widget mapPage = MapPage(title: "MapPage");
 
+    //Liked Page
     Widget likedPage = LikedPage();
 
+    //Disable the following for now
     Widget matchPage = Scaffold(
       appBar: bar,
       body: Center(
-        child: Text("This is the matchmaker page!"),
+        child: Text("Coming Soon!"),
       ),
     );
 
+    //Settings
     Widget settingsPage = SettingsPage();
 
     // basic setup for a placeholder page
@@ -126,6 +119,7 @@ class HomePageState extends State<HomePage> {
     //   )
     // );
 
+    //Set the options
     widgetOptions = <Widget>[
       homePage,
       mapPage,

@@ -43,6 +43,7 @@ class Databases {
     return returnList;
   }
 
+  ///Gets the house database from an id.
   static Future<Database> getHouseDatabaseFromId(int id) async {
     HouseDatabaseLocationTable houseDatabases = await queryDatabaseLocationTable();
     //Get the database
@@ -53,6 +54,7 @@ class Databases {
     return await getHouseDatabase(houseDatabases.getDataByID(id).filepath);
   }
 
+  ///Gets the house database using the path
   static Future<Database> getHouseDatabase(String path) async {
     setFactory();
     //Open the database
@@ -60,16 +62,17 @@ class Databases {
     return database;
   }
 
+  ///Gets the liked houses database
+  static Future<Database> getLikedHousesDatabase() async{
+    return _openDatabase(global_vars.likedHousesName, global_vars.likedHousesDbDataCreation, updateFromResources: false);
+  }
+
 
   //Query Data
   static Future<HouseDatabaseLocationTable> queryDatabaseLocationTable() async {
     //Check if database has been cached
     if(_houseDatabases == null){
-      String createFunction =
-          "CREATE TABLE HouseDatabase(id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT NOT NULL, locationLa REAL NOT NULL, locationLo REAL NOT NULL, radius REAL NOT NULL, filepath TEXT NOT NULL, tags TEXT NOT NULL)";
-
       //Open the houses database
-      cloneHouse(global_vars.homesName);
       Database housesDatabase = await _openDatabase(global_vars.homesName, global_vars.houseDbLocationDataCreation);
       //Save it and close it
       final List<Map<String, Object?>> databases = await housesDatabase.query('HouseDatabase');
@@ -111,13 +114,12 @@ class Databases {
 
   //Private Functions
   static Future<Database> _openHouseDatabase(String path) async {
-    setFactory();
 
     return _openDatabase(path, global_vars.mapDataCreation);
   }
 
   //TODO: This causes a race condition. Look into it.
-  static Future<Database> _openDatabase(String path, String? createFunction) async {
+  static Future<Database> _openDatabase(String path, String? createFunction, {bool updateFromResources = true}) async {
     //Check if cached
     if(openedDatabases.containsKey(path)){
       return openedDatabases[path]!;
@@ -126,7 +128,9 @@ class Databases {
     setFactory();
 
     //Check if the database needs to be updated...
-    await cloneHouse(path);
+    if(updateFromResources) {
+      await cloneHouse(path);
+    }
 
 
     //Return the database
@@ -137,9 +141,6 @@ class Databases {
     } else{
       createFunctionReal = createFunction;
     }
-
-    //TODO
-    print("Opened Database!");
 
     //Cache the database and return it
 
@@ -154,6 +155,7 @@ class Databases {
 
     return database;
   }
+
 
 
   //Util Functions

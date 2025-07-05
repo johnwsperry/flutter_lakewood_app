@@ -1,4 +1,5 @@
 ﻿import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
+import 'package:testing/Classes/databaseTables.dart';
 import 'package:testing/Classes/house.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -8,6 +9,7 @@ import 'package:testing/Classes/mapData.dart';
 import '../globalVars.dart';
 import 'housePage.dart';
 import '../Util/databases.dart' as databases;
+import '../main.dart' as main;
 
 /// This is the map page, responsible for creating and dealing with the map.
 class MapPage extends StatefulWidget {
@@ -60,6 +62,34 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
             ),
           ),
         ),
+      );
+    }
+    //Return the compiled item
+    return MarkerLayer(markers: markers);
+  }
+  
+  MarkerLayer getMarkerLayerFromDataTable(HouseDatabaseTable table){
+    List<Marker> markers = [];
+
+    //Compile the data using the table in databases.
+    for (MapData house in table.data) {
+      markers.add(
+      Marker(
+        point: house.location,
+        width: mapIconWidth,
+        height: mapIconHeight,
+        alignment: Alignment.topCenter,
+        child: GestureDetector(
+          onTap: () {
+          onPinClickEvent(house);
+      },
+      child: Icon(
+        Icons.location_pin,
+        size: mapIconSize,
+        color: Colors.red,
+        ),
+          ),
+      ),
       );
     }
     //Return the compiled item
@@ -150,7 +180,9 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
             width: size.width * widgetWidth, //TODO: DESIGNER
             right: right,
             top: top,
-            child: mapOverlayMenu(),
+            child: StatefulBuilder(builder: (context, setStateOverlay) {
+              return mapOverlayMenu(setStateOverlay);
+            }),
           ),
     );
 
@@ -166,7 +198,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   }
 
   //Ai test TODO
-  Widget mapOverlayMenu() {
+  Widget mapOverlayMenu(Function overlaySetState) {
 
     return DefaultTextStyle(
       style: TextStyle(fontFamily: 'robotoSlab', color: Colors.black),
@@ -245,9 +277,10 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                   final messenger = ScaffoldMessenger.of(context);
                   messenger.removeCurrentSnackBar();
 
-                  setState(() {
-                    if (likedHomes.contains(selectedPin!)) {
-                      likedHomes.remove(selectedPin!);
+                  //Updates the state based on if the pin is liked
+                  overlaySetState(() {
+                    if (main.likedTable.containsHouse(main.activeTable, selectedPin!.id)) {
+                      main.likedTable.removeHouse(main.activeTable, selectedPin!.id);
                       messenger.showSnackBar(
                         SnackBar(
                           content: Text('Removed from liked homes!'),
@@ -255,7 +288,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                         ),
                       );
                     } else {
-                      likedHomes.add(selectedPin!);
+                      main.likedTable.addHouse(main.activeTable, selectedPin!.id);
                       messenger.showSnackBar(
                         SnackBar(
                           content: Text('Added to liked homes!'),
@@ -263,10 +296,11 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                         ),
                       );
                     }
+                    print(main.likedTable.containsHouse(main.activeTable, selectedPin!.id));
                   });
                 },
                 child: Icon(
-                  (likedHomes.contains(selectedPin!))
+                  (main.likedTable.containsHouse(main.activeTable, selectedPin!.id))
                       ? Icons.star
                       : Icons.star_border,
                 ),
@@ -290,15 +324,7 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   //Building the widget
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: bar, body: FutureBuilder(future: _mapData, builder: (context, snapshot){
-      if (snapshot.hasData) {
-        return map(context, snapshot.data!);
-      } else {
-        return Center(child: CircularProgressIndicator(),);
-      }
-    }
-    )
-    );
+    return Scaffold(appBar: bar, body: map(context, getMarkerLayerFromDataTable(main.houseDataTable)));
   }
 
   ///Dispose the widget and overlays
