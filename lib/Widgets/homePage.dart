@@ -1,12 +1,8 @@
-﻿
-import 'package:flutter/material.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:testing/Widgets/settingsPage.dart';
 import 'mapPage.dart';
 import 'likedPage.dart';
-import 'package:testing/Theme/themes.dart';
 import 'package:testing/globalVars.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:testing/Classes/house.dart';
 import 'package:testing/Classes/databaseTables.dart';
 import 'package:testing/Classes/mapData.dart';
@@ -32,10 +28,12 @@ class HomePageState extends State<HomePage> {
     super.initState();
 
     Future<void> loadHomes() async {
-      HouseDatabaseTable dbTable = await Databases.queryHousesByPath("lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite");
+      HouseDatabaseTable dbTable = await Databases.queryHousesByPath(
+        "lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite",
+      );
       allHomes = dbTable.getAllData();
-      
-      debugPrint("${allHomes.length}"); 
+
+      debugPrint("${allHomes.length}");
 
       for (MapData pt in allHomes) {
         debugPrint("${pt.name}, ${pt.address}");
@@ -44,7 +42,7 @@ class HomePageState extends State<HomePage> {
 
     loadHomes();
     homePage = Scaffold(
-      appBar: bar, 
+      appBar: bar,
 
       body: Container(
         decoration: BoxDecoration(
@@ -110,9 +108,7 @@ class HomePageState extends State<HomePage> {
 
     Widget matchPage = Scaffold(
       appBar: bar,
-      body: Center(
-        child: Text("This is the matchmaker page!"),
-      ),
+      body: Center(child: Text("This is the matchmaker page!")),
     );
 
     Widget settingsPage = SettingsPage();
@@ -144,7 +140,6 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       home: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: widgetOptions.elementAt(_currentIndex + 1),
@@ -153,10 +148,7 @@ class HomePageState extends State<HomePage> {
           type: BottomNavigationBarType.fixed,
           onTap: pageSwitch,
           items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.map),
-                label: "Map"
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
 
             BottomNavigationBarItem(
               icon: Icon(Icons.thumb_up),

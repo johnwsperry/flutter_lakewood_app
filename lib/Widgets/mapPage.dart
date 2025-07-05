@@ -20,7 +20,6 @@ class MapPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapPage> with TickerProviderStateMixin {
-
   late final _animatedMapController = AnimatedMapController(
     vsync: this,
     duration: Duration(milliseconds: focusAnimationDuration),
@@ -40,9 +39,10 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     List<Marker> markers = [];
 
     //Compile the data using the table in databases.
-    for (MapData house in (await databases.Databases.queryHousesByPath(
-        "lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite"))
-        .data) {
+    for (MapData house
+        in (await databases.Databases.queryHousesByPath(
+          "lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite",
+        )).data) {
       markers.add(
         Marker(
           point: house.location,
@@ -165,9 +165,8 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     }
   }
 
-  //Ai test TODO
+  //Ai test TODO (This one Allan work one rn)
   Widget mapOverlayMenu() {
-
     return DefaultTextStyle(
       style: TextStyle(fontFamily: 'robotoSlab', color: Colors.black),
       child: Container(
@@ -225,7 +224,10 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
                           //maintainState: true,
                           builder: (BuildContext context) {
                             closePin();
-                            return HousePage(data: selectedPin!, isLiked: false);
+                            return HousePage(
+                              data: selectedPin!,
+                              isLiked: false,
+                            );
                           },
                         ),
                       );
@@ -278,7 +280,6 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
     );
   }
 
-
   //Initialization and caching of Async Data
   @override
   void initState() {
@@ -290,14 +291,18 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
   //Building the widget
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: bar, body: FutureBuilder(future: _mapData, builder: (context, snapshot){
-      if (snapshot.hasData) {
-        return map(context, snapshot.data!);
-      } else {
-        return Center(child: CircularProgressIndicator(),);
-      }
-    }
-    )
+    return Scaffold(
+      appBar: bar,
+      body: FutureBuilder(
+        future: _mapData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return map(context, snapshot.data!);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 
@@ -362,7 +367,6 @@ class MapPageState extends State<MapPage> with TickerProviderStateMixin {
       children: children,
     );
   }
-
 }
 
 TileLayer get openStreetMapTileLayer => TileLayer(

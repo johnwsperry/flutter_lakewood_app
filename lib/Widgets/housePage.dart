@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:testing/Classes/house.dart';
 import 'package:testing/Classes/mapData.dart';
 
 class HousePage extends StatelessWidget {
@@ -14,8 +13,7 @@ class HousePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.indigoAccent,
-        title: Text(data.address,
-        style: TextStyle(color: Colors.white)),
+        title: Text(data.address, style: TextStyle(color: Colors.white)),
       ),
       body: Center(
         child: Padding(
