@@ -9,6 +9,12 @@ class HousePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String descriptionText;
+    if(int.parse(data.yearBuilt) != -1) {
+      descriptionText = "Built in ${data.yearBuilt}\n${data.description}";
+    } else {
+      descriptionText = "${data.description}. Unknown construction date.";
+    } // For use in the description SizedBox
     //Create the scaffold using the data from MapData.
     return Scaffold(
       appBar: AppBar(
@@ -49,6 +55,7 @@ class HousePage extends StatelessWidget {
                       width: double.infinity,
                       child: Text(
                         data.address,
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                           fontFamily: "robotoSlab",
@@ -59,33 +66,10 @@ class HousePage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: Text(
-                        "Built in ${data.yearBuilt}",
+                        descriptionText,
                         style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontFamily: "robotoSlab",
+                          fontFamily: "robotoSlab", //IDEALLY FIND A NEW FONT FOR THIS
                           fontSize: 18,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(128, 208, 208, 208),
-                          border: Border.all(color: Colors.blueGrey, width: 2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          data.description,
-                          style: TextStyle(
-                            fontFamily:
-                                "robotoSlab", //IDEALLY FIND A NEW FONT FOR THIS
-                            fontSize: 18,
-                          ),
                         ),
                       ),
                     ),
