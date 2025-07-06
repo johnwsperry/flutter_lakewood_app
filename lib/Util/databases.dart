@@ -164,9 +164,10 @@ class Databases {
     if(!_factorySet){
       if (kIsWeb) {
         databaseFactory = databaseFactoryFfiWeb;
-      } else {
+      } else if (Platform.isMacOS || Platform.isWindows){
         databaseFactory = databaseFactoryFfi;
       }
+      //Don't set for mobile.
       _factorySet = true;
     }
   }

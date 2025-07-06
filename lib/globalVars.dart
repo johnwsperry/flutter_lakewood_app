@@ -24,7 +24,7 @@ double focusMapInitZoom = 20;
 //Multiply by 0.000001
 double latLongMultiplier = 0.000001;
 int wideCenterOffset = -900;
-int longCenterOffset = -300;
+int longCenterOffset = -425;
 
 //Widget Centering
 double wideUp = 0.5;

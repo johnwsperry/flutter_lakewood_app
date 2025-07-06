@@ -19,7 +19,8 @@ late LikedHousesTable likedTable;
 
 int activeTable = 0; //TODO: This is for lakewood. Change later.
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   //Query the data table
   _oldDataTable = database.Databases.queryHousesByPath("lakewood-lakeoswego-oregon-unitedstates-earth-milkyway.sqlite");
   //Set the old table
