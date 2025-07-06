@@ -17,7 +17,7 @@ late HouseDatabaseTable houseDataTable;
 
 late LikedHousesTable likedTable;
 
-int activeTable = 0; //TODO: This is for lakewood
+int activeTable = 0; //TODO: This is for lakewood. Change later.
 
 void main() {
   //Query the data table

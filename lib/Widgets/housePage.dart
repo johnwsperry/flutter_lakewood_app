@@ -13,7 +13,7 @@ class HousePage extends StatelessWidget {
     if(int.parse(data.yearBuilt) != -1) {
       descriptionText = "Built in ${data.yearBuilt}\n${data.description}";
     } else {
-      descriptionText = "${data.description}. Unknown construction date.";
+      descriptionText = "Unknown construction date\n${data.description}";
     } // For use in the description SizedBox
     //Create the scaffold using the data from MapData.
     return Scaffold(
