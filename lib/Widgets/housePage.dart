@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:testing/Classes/house.dart';
 import 'package:testing/Classes/mapData.dart';
 
 class HousePage extends StatelessWidget {
