@@ -11,7 +11,7 @@ class HousePage extends StatelessWidget {
   Widget build(BuildContext context) {
     String descriptionText;
     if(int.parse(data.yearBuilt) != -1) {
-      descriptionText = "${data.description}, built in ${data.yearBuilt}.";
+      descriptionText = "Built in ${data.yearBuilt}\n${data.description}";
     } else {
       descriptionText = "${data.description}. Unknown construction date.";
     } // For use in the description SizedBox
