@@ -6,7 +6,7 @@ import 'Util/databases.dart' as database;
 import 'globalVars.dart' as global_vars;
 import 'Widgets/homePage.dart';
 
-bool debugMode = true; //TODO: TURN THIS OFF WHEN WE PUBLISH THE APP
+bool debugMode = false; //TODO: TURN THIS OFF WHEN WE PUBLISH THE APP
 
 //Use for only lakewood
 late Future<HouseDatabaseTable> _oldDataTable;
@@ -17,7 +17,7 @@ late HouseDatabaseTable houseDataTable;
 
 late LikedHousesTable likedTable;
 
-int activeTable = 0; //TODO: This is for lakewood. Change later.
+int activeTable = 0; //TODO: This is for lakewood. Change later
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

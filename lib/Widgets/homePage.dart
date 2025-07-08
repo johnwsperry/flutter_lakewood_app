@@ -1,18 +1,10 @@
-﻿
+
 import 'package:flutter/material.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:testing/Widgets/creditsPage.dart';
 import 'package:testing/Widgets/settingsPage.dart';
 import 'mapPage.dart';
 import 'likedPage.dart';
-import 'package:testing/Theme/themes.dart';
 import 'package:testing/globalVars.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:testing/Classes/house.dart';
-import 'package:testing/Classes/databaseTables.dart';
-import 'package:testing/Classes/mapData.dart';
-import 'package:testing/Util/databases.dart';
-import '../main.dart' as main;
 
 ///This is the homepage where everything is plonked on top of apparently
 class HomePage extends StatefulWidget {

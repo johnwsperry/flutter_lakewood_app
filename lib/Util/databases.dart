@@ -1,4 +1,4 @@
-﻿
+
 import 'dart:collection';
 import 'dart:io';
 
@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
-import 'package:testing/Classes/house.dart';
 import 'package:testing/globalVars.dart' as global_vars;
 
 import '../Classes/databaseTables.dart';

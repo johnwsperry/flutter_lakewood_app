@@ -1,9 +1,8 @@
-﻿
+
 
 
 
 import 'package:sqflite/sqflite.dart';
-import 'package:testing/main.dart';
 
 class LikedHousesTable{
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:testing/Classes/house.dart';
 import 'package:testing/Classes/likedHousesTable.dart';
 import 'package:testing/globalVars.dart';
 

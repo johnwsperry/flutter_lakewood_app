@@ -142,7 +142,7 @@ class CreditsPage{
     "High School Student.\nGuy who worked on most of the backend.\nAlso the IT guy.",
     "I accidentally became the frontend developer lmao\nit's not a bug, it's a FEATURE!!",
     "High school student, app contributor",
-    "placeholder"
+    "App development collaborator, UI design, and a little front end"
   ];
   static List<String> imagePaths = [
     "AlvinWang-Credits-0.png",
