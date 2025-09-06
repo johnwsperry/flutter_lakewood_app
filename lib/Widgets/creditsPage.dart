@@ -136,19 +136,25 @@ class CreditsPage{
     "Alvin Wang",
     "Leon Li",
     "CJ Hanson",
-    "Allan Wang"
+    "Allan Wang",
+    "Matthew Rodrigano"
   ];
   static List<String> descriptions = [
     "High School Student.\nGuy who worked on most of the backend.\nAlso the IT guy.",
     "I accidentally became the frontend developer lmao\nit's not a bug, it's a FEATURE!!",
     "High school student, app contributor",
-    "App development collaborator, UI design, and a little front end"
+    "App development collaborator, UI design, and a little front end",
+    "Matthew is a senior at Lakeridge High School. "
+        "Outside of school and coding, he runs cross country and track, "
+        "participates in math competitions, volunteers with local organizations,"
+        " and spends time with family and friends."
   ];
   static List<String> imagePaths = [
     "AlvinWang-Credits-0.png",
     "LeonLi-Credits-0.png",
     "CJHanson-Credits-0.png",
-    "AllanWang-Credits-0.png"
+    "AllanWang-Credits-0.png",
+    "MatthewRodrigano-Credits-0.jpeg"
   ];
 
 }
